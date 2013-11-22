@@ -19,23 +19,15 @@ public class DBConnect {
     
     private DBConnect()
     {
-        try{
+       try{
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:derby://localhost:8080/javadb";
             String uName = "root";
             String uPassword = "gojira";
             conn = DriverManager.getConnection(host, uName, uPassword);
         }
-        catch(SQLException ex){
+        catch(SQLException | ClassNotFoundException |InstantiationException | IllegalAccessException ex){
                 System.err.println(ex.getMessage());
-        }
-        catch(ClassNotFoundException ex){
-            System.err.println(ex.getMessage()));
-        }
-        catch(InstantiationException ex){
-            System.err.println(ex.getMessage());
-        }
-        catch(IllegalAccessException ex){
-            System.err.println(ex.getMessage());
         }
     }
 }
