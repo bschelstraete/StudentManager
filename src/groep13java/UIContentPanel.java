@@ -6,6 +6,6 @@ package groep13java;
 
 import javax.swing.JPanel;
 
-public class UIPanel extends JPanel{
+public class UIContentPanel extends JPanel{
     
 }

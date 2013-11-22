@@ -4,7 +4,21 @@
  */
 package groep13java;
 
+import java.util.List;
+import java.util.ArrayList;
 
 public class User {
-    private DBaseSQL SQL = new DBaseSQL();
+    private DBaseSQL SQL;
+    private List<Observer> views;
+    
+    public User()
+    {
+        SQL = new DBaseSQL();
+        views = new ArrayList<>();
+    }
+    
+    public void addView(Observer view)
+    {
+        views.add(view);
+    }
 }
