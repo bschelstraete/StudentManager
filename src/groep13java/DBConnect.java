@@ -1,8 +1,6 @@
 package groep13java;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBConnect {
     private static DBConnect instance = new DBConnect();
@@ -21,7 +19,7 @@ public class DBConnect {
     {
        try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            String host = "jdbc:derby://localhost:8080/javadb";
+            String host = "jdbc:mysql://localhost:8080/javadb";
             String uName = "root";
             String uPassword = "gojira";
             conn = DriverManager.getConnection(host, uName, uPassword);
