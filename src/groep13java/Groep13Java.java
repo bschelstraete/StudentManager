@@ -4,6 +4,8 @@
  */
 package groep13java;
 
+import java.util.List;
+
 /**
  *
  * @author Jellyfish
@@ -14,6 +16,14 @@ public class Groep13Java {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("wiiiii");
+        DBaseSQL dbase;
+        dbase = new DBaseSQL();
+        List<Student> lijstje;
+        lijstje = dbase.getStudenten();
+        
+        for(int i = 0; i < lijstje.size(); i++)
+        {
+            System.out.println(lijstje.get(i).familienaam());
+        }
     }
 }

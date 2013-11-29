@@ -163,11 +163,83 @@ public class DBaseSQL {
         return partimList;
     }
     
+    public void voegStudentToe(String voornaam, String familienaam)
+    {
+        try
+        {
+            prepSt = conn.prepareStatement("INSERT INTO 'student('ID', 'familienaam', 'voornaam') VALUES('?', '?', '?'");
+            prepSt.setString(1, "NULL");
+            prepSt.setString(2, familienaam);
+            prepSt.setString(3, voornaam);
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //dosomeshit
+        }
+    }
+    
+    public void pasStudentAan(Integer id, String naam, Boolean checkVoornaam)
+    {
+        if(checkVoornaam)
+        {
+            try
+            {
+                prepSt = conn.prepareStatement("UPDATE beschrijving SET 'voornaam' = '" + naam + "' WHERE ID = '" + id);
+                prepSt.executeUpdate();
+            }
+            catch(SQLException e)
+            {
+                //DOSOMESHIT
+            }
+        }
+        else
+        {
+            try
+            {
+                prepSt = conn.prepareStatement("UPDATE beschrijving SET 'familienaam' = '" + naam + "' WHERE ID = '" + id);
+                prepSt.executeUpdate();
+            }
+            catch(SQLException e)
+            {
+                //DOSOMESHIT
+            }
+        }
+    }
+    
+    public void pasStudentAan(Integer id, String voornaam, String familienaam)
+    {
+         try
+         {
+            prepSt = conn.prepareStatement("UPDATE beschrijving SET 'voornaam' = '" + voornaam + "' WHERE ID = '" + id);
+            prepSt.executeUpdate();
+            prepSt = conn.prepareStatement("UPDATE beschrijving SET 'familienaam' = '" + familienaam + "' WHERE ID = '" + id);
+            prepSt.executeUpdate();
+         }
+         catch(SQLException e)
+         {
+                //DOSOMESHIT
+         }
+    }
+    
+    public void verwijderStudent(Integer id)
+    {
+        try
+        {
+            prepSt = conn.prepareStatement("DELETE FROM student WHERE ID = " + id);
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT3
+        }        
+    }
+    
     public void voegCompetentieToe(String beschrijving)
     {
         try
         {
-            prepSt = conn.prepareStatement("INSERT INTO competentie (ID, beschrijving) VALUES(?, ?)");
+            prepSt = conn.prepareStatement("INSERT INTO 'competentie' ('ID', 'beschrijving') VALUES('?', '?')");
             prepSt.setString(1, "NULL");
             prepSt.setString(2, beschrijving);
             prepSt.executeUpdate();
