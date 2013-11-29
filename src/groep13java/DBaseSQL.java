@@ -3,45 +3,146 @@
  * and open the template in the editor.
  */
 package groep13java;
+import java.sql.*;
+import java.sql.Statement;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
  * @author Jellyfish
  */
 public class DBaseSQL {
-    private DBConnect conn;
-    private String SQLStatement;
+    private DBConnect dbConnect;
+    private Connection conn = dbConnect.getConnection();
+    private String stringSQL;
+    private Statement st;
     
-    public DBaseSQL()
+    
+    public List<Student> getStudenten()
     {
-        SQLStatement = "";
+        ArrayList<Student> studentList = new ArrayList();
+        try
+        {
+            st = conn.createStatement();
+            stringSQL = "SELECT * FROM student";
+            ResultSet rs = st.executeQuery(stringSQL);
+            while(rs.next())
+            {
+                Integer id = rs.getInt("ID");
+                String voornaam = rs.getString("voornaam");
+                String familienaam = rs.getString("familienaam");
+                
+                Student bufStudent = new Student(id, voornaam, familienaam);
+                studentList.add(bufStudent);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+        
+        return studentList;
     }
     
-    public void voegCompetentieToe(String competentie)
+    public List<Opleiding> getOpleidingen()
     {
-        SQLStatement = competentie;
-    }
-    public void pasCompetentieAan(String competentie)
-    {
-        SQLStatement = competentie;
-    }
-    public void verwijderCompetentie(String competentie)
-    {
-        SQLStatement = competentie;
+        ArrayList<Opleiding> opleidingList = new ArrayList();
+        try
+        {
+            st = conn.createStatement();
+            stringSQL = "SELECT * FROM opleiding";
+            ResultSet rs = st.executeQuery(stringSQL);
+            while(rs.next())
+            {
+                Integer id = rs.getInt("ID");
+                String naam = rs.getString("naam");
+                
+                Opleiding bufOpleiding = new Opleiding(id, naam);
+                opleidingList.add(bufOpleiding);
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return opleidingList;
     }
     
-    public void koppelIndactorAanPartim(byte indicator, String partim)
+    public List<Competentie> getCompetenties()
     {
-        SQLStatement = indicator + partim;
+        ArrayList<Competentie> competentieList = new ArrayList();
+        try
+        {
+            st = conn.createStatement();
+            stringSQL = "SELECT * FROM competentie";
+            ResultSet rs = st.executeQuery(stringSQL);
+            while(rs.next())
+            {
+                Integer id = rs.getInt("ID");
+                String beschrijving = rs.getString("beschrijving");
+                
+                Competentie bufCompetentie = new Competentie(id, beschrijving);
+                competentieList.add(bufCompetentie);
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return competentieList;
     }
     
-    public void voerIndactorInStudent(byte indicator, String student, String partim)
+    public List<Deelcompetentie> getDeelcompetentie()
     {
-        SQLStatement = indicator + student + partim;
+        ArrayList<Deelcompetentie> deelcompetentieList = new ArrayList();
+        try
+        {
+            st = conn.createStatement();
+            stringSQL = "SELECT * FROM deelcompetentie";
+            ResultSet rs = st.executeQuery(stringSQL);
+            while(rs.next())
+            {
+                Integer id = rs.getInt("ID");
+                String beschrijving = rs.getString("beschrijving");
+                
+                Deelcompetentie bufDeelcompetentie = new Deelcompetentie(id, beschrijving);
+                deelcompetentieList.add(bufDeelcompetentie);
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return deelcompetentieList;
     }
     
-    public void volgStudentOp(String student)
+    
+    public void voegCompetentieToe()
     {
-        SQLStatement = "SELECT * FROM studenten WHERE student.naam IS " + student;
+
+    }
+    public void pasCompetentieAan()
+    {
+
+    }
+    public void verwijderCompetentie()
+    {
+
+    }
+    
+    public void koppelIndactorAanPartim()
+    {
+ 
+    }
+    
+    public void voerIndactorInStudent()
+    {
+
+    }
+    
+    public void volgStudentOp()
+    {
+
     }
 }
