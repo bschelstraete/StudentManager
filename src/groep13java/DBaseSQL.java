@@ -13,10 +13,11 @@ import java.util.ArrayList;
  * @author Jellyfish
  */
 public class DBaseSQL {
-    private DBConnect dbConnect;
+    private DBConnect dbConnect = DBConnect.getInstance();
     private Connection conn = dbConnect.getConnection();
     private String stringSQL;
     private Statement st;
+    private PreparedStatement prepSt;
     
     
     public List<Student> getStudenten()
@@ -32,7 +33,6 @@ public class DBaseSQL {
                 Integer id = rs.getInt("ID");
                 String voornaam = rs.getString("voornaam");
                 String familienaam = rs.getString("familienaam");
-                
                 Student bufStudent = new Student(id, voornaam, familienaam);
                 studentList.add(bufStudent);
             }
@@ -117,32 +117,90 @@ public class DBaseSQL {
         return deelcompetentieList;
     }
     
+    public List<Module> getModules()
+    {
+        ArrayList<Module> moduleList = new ArrayList();
+        try
+        {
+            st = conn.createStatement();
+            stringSQL = "SELECT * FROM module";
+            ResultSet rs = st.executeQuery(stringSQL);
+            while(rs.next())
+            {
+                Integer id = rs.getInt("ID");
+                String naam = rs.getString("naam");
+                Module bufModule = new Module(id, naam);
+                moduleList.add(bufModule);
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return moduleList; 
+    }
     
-    public void voegCompetentieToe()
+    public List<Partim> getPartims()
     {
-
-    }
-    public void pasCompetentieAan()
-    {
-
-    }
-    public void verwijderCompetentie()
-    {
-
+        ArrayList<Partim> partimList = new ArrayList();
+        try
+        {
+            st = conn.createStatement();
+            stringSQL = "SELECT * FROM partim";
+            ResultSet rs = st.executeQuery(stringSQL);
+            while(rs.next())
+            {
+                Integer id = rs.getInt("ID");
+                String naam = rs.getString("naam");
+                Partim bufPartim = new Partim(id, naam);
+                partimList.add(bufPartim);
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return partimList;
     }
     
-    public void koppelIndactorAanPartim()
+    public void voegCompetentieToe(String beschrijving)
     {
- 
+        try
+        {
+            prepSt = conn.prepareStatement("INSERT INTO competentie (ID, beschrijving) VALUES(?, ?)");
+            prepSt.setString(1, "NULL");
+            prepSt.setString(2, beschrijving);
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHITYO!
+        }
     }
     
-    public void voerIndactorInStudent()
+    public void pasCompetentieAan(Integer id, String beschrijving)
     {
-
+        try
+        {
+            prepSt = conn.prepareStatement("UPDATE beschrijving SET 'beschrijving' = '" + beschrijving + "' WHERE ID = '" + id);
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT
+        }
     }
     
-    public void volgStudentOp()
+    public void verwijderCompetentie(Integer id)
     {
-
+        try
+        {
+            prepSt = conn.prepareStatement("DELETE FROM competentie WHERE ID = " + id);
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT3
+        }        
     }
 }
