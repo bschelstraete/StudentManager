@@ -9,5 +9,15 @@ package groep13java;
  * @author Jellyfish
  */
 public class Indicator {
+    private int id;
     
+    public int getIndicator()
+    {
+        return id;
+    }
+    
+    public Indicator(int indicator)
+    {
+        this.id = indicator;
+    }
 }

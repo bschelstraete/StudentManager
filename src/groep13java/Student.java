@@ -9,11 +9,11 @@ package groep13java;
  * @author Jellyfish
  */
 public class Student {
-    private int id; 
+    private Integer id; 
     private String voornaam;
     private String familienaam;
     
-    public int getID()
+    public Integer getID()
     {
         return id;
     }
@@ -26,7 +26,7 @@ public class Student {
         return familienaam;
     }
     
-    public Student(int id, String voornaam, String familienaam)
+    public Student(Integer id, String voornaam, String familienaam)
     {
         this.id = id;
         this.voornaam = voornaam;
