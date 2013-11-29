@@ -13,7 +13,7 @@ public class User {
     
     public User()
     {
-        SQL = new DBaseSQL();
+        DBaseSQL database = new DBaseSQL();
         views = new ArrayList<>();
     }
     
