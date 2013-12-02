@@ -23,10 +23,10 @@ public class UICompetentieVerwijderenPanel extends JPanel{
     private JLabel label;
     private JScrollPane listScroller; 
     
-    public UICompetentieVerwijderenPanel()
+    public UICompetentieVerwijderenPanel(User user)
     {
         this.setLayout(new BorderLayout());
-        createListPanel();
+        createListPanel(user);
         createButtonPanel();
         addComponents();
     }
@@ -37,7 +37,7 @@ public class UICompetentieVerwijderenPanel extends JPanel{
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
     
-    private void createListPanel()
+    private void createListPanel(User user)
     {
         listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));

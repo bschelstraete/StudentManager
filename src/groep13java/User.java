@@ -9,12 +9,19 @@ import java.util.ArrayList;
 
 public class User {
     private DBaseSQL SQL;
+    private List<Student> studentList;
     private List<Observer> views;
+    
+    public List<Student> getStudenten()
+    {
+        return studentList;
+    }
     
     public User()
     {
-        DBaseSQL database = new DBaseSQL();
+        DBaseSQL db = new DBaseSQL();
         views = new ArrayList<>();
+        studentList = db.getStudenten();
     }
     
     public void addView(Observer view)
