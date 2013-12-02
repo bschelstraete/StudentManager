@@ -163,14 +163,14 @@ public class DBaseSQL {
         return partimList;
     }
     
-    public void voegStudentToe(String voornaam, String familienaam)
+    public void voegStudentToe(Student student)
     {
         try
         {
-            prepSt = conn.prepareStatement("INSERT INTO 'student('ID', 'familienaam', 'voornaam') VALUES('?', '?', '?'");
+            prepSt = conn.prepareStatement("INSERT INTO student(ID, familienaam, voornaam) VALUES('?', '?', '?'");
             prepSt.setString(1, "NULL");
-            prepSt.setString(2, familienaam);
-            prepSt.setString(3, voornaam);
+            prepSt.setString(2, student.getFamilienaam());
+            prepSt.setString(3, student.getVoornaam());
             prepSt.executeUpdate();
         }
         catch(SQLException e)
@@ -179,54 +179,27 @@ public class DBaseSQL {
         }
     }
     
-    public void pasStudentAan(Integer id, String naam, Boolean checkVoornaam)
+    public void pasStudentAan(Student student)
     {
-        if(checkVoornaam)
-        {
             try
             {
-                prepSt = conn.prepareStatement("UPDATE beschrijving SET 'voornaam' = '" + naam + "' WHERE ID = '" + id);
+                prepSt = conn.prepareStatement("UPDATE student SET voornaam = '?' WHERE ID = " + student.getID());
+                prepSt.setString(1, student.getVoornaam());
                 prepSt.executeUpdate();
+                 prepSt = conn.prepareStatement("UPDATE student SET familienaam = '?' WHERE ID = " + student.getID());
+                prepSt.setString(1, student.getFamilienaam());
             }
             catch(SQLException e)
             {
                 //DOSOMESHIT
             }
-        }
-        else
-        {
-            try
-            {
-                prepSt = conn.prepareStatement("UPDATE beschrijving SET 'familienaam' = '" + naam + "' WHERE ID = '" + id);
-                prepSt.executeUpdate();
-            }
-            catch(SQLException e)
-            {
-                //DOSOMESHIT
-            }
-        }
     }
     
-    public void pasStudentAan(Integer id, String voornaam, String familienaam)
-    {
-         try
-         {
-            prepSt = conn.prepareStatement("UPDATE beschrijving SET 'voornaam' = '" + voornaam + "' WHERE ID = '" + id);
-            prepSt.executeUpdate();
-            prepSt = conn.prepareStatement("UPDATE beschrijving SET 'familienaam' = '" + familienaam + "' WHERE ID = '" + id);
-            prepSt.executeUpdate();
-         }
-         catch(SQLException e)
-         {
-                //DOSOMESHIT
-         }
-    }
-    
-    public void verwijderStudent(Integer id)
+    public void verwijderStudent(Student student)
     {
         try
         {
-            prepSt = conn.prepareStatement("DELETE FROM student WHERE ID = " + id);
+            prepSt = conn.prepareStatement("DELETE FROM student WHERE ID = " + student.getID());
             prepSt.executeUpdate();
         }
         catch(SQLException e)
@@ -235,13 +208,13 @@ public class DBaseSQL {
         }        
     }
     
-    public void voegCompetentieToe(String beschrijving)
+    public void voegCompetentieToe(Competentie competentie)
     {
         try
         {
-            prepSt = conn.prepareStatement("INSERT INTO 'competentie' ('ID', 'beschrijving') VALUES('?', '?')");
+            prepSt = conn.prepareStatement("INSERT INTO competentie(ID, beschrijving) VALUES('?', '?')");
             prepSt.setString(1, "NULL");
-            prepSt.setString(2, beschrijving);
+            prepSt.setString(2, competentie.getBeschrijving());
             prepSt.executeUpdate();
         }
         catch(SQLException e)
@@ -250,11 +223,12 @@ public class DBaseSQL {
         }
     }
     
-    public void pasCompetentieAan(Integer id, String beschrijving)
+    public void pasCompetentieAan(Competentie competentie)
     {
         try
         {
-            prepSt = conn.prepareStatement("UPDATE beschrijving SET 'beschrijving' = '" + beschrijving + "' WHERE ID = '" + id);
+            prepSt = conn.prepareStatement("UPDATE competentie SET beschrijving = '" + competentie.getBeschrijving()
+                     + "' WHERE ID = " + competentie.getID());
             prepSt.executeUpdate();
         }
         catch(SQLException e)
@@ -263,16 +237,125 @@ public class DBaseSQL {
         }
     }
     
-    public void verwijderCompetentie(Integer id)
+    public void verwijderCompetentie(Competentie competentie)
     {
         try
         {
-            prepSt = conn.prepareStatement("DELETE FROM competentie WHERE ID = " + id);
+            prepSt = conn.prepareStatement("DELETE FROM competentie WHERE ID = " 
+                    + competentie.getID());
             prepSt.executeUpdate();
         }
         catch(SQLException e)
         {
             //DOSOMESHIT3
         }        
+    }
+    
+    public void voegDeelcompetentieToe(Deelcompetentie deelcompetentie)
+    {
+        try
+        {
+            prepSt = conn.prepareStatement("INSERT INTO deelcompetentie (ID, beschrijving) VALUES('?', '?')");
+            prepSt.setString(1, "NULL");
+            prepSt.setString(2, deelcompetentie.getBeschrijving());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHITYO!
+        }
+    }
+    
+    public void pasDeelcompetentieAan(Deelcompetentie deelcompetentie)
+    {
+        try
+        {
+            prepSt = conn.prepareStatement("UPDATE deelcompetentie SET beschrijving = '" 
+                     + deelcompetentie.getBeschrijving()
+                     + "' WHERE ID = " + deelcompetentie.getID());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT
+        }
+    }
+    
+    public void verwijderDeelcompetentie(Deelcompetentie deelcompetentie)
+    {
+        try
+        {
+            prepSt = conn.prepareStatement("DELETE FROM deelcompetentie WHERE ID = " 
+                    + deelcompetentie.getID());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT3
+        }   
+    }
+    
+    public void voegOpleidingToe(Opleiding opleiding)
+    {
+        try
+        {
+            prepSt = conn.prepareStatement("INSERT INTO opleiding(ID, naam) VALUES('?', '?')");
+            prepSt.setString(1, "NULL");
+            prepSt.setString(2, opleiding.getNaam());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHITYO!
+        }
+    }
+    
+    public void pasOpleidingAan(Opleiding opleiding)
+    {
+        try
+        {
+            prepSt = conn.prepareStatement("UPDATE opleiding SET naam = '" + opleiding.getNaam()
+                     + "' WHERE ID = " + opleiding.getID());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT
+        }
+    }
+    
+    public void verwijderOpleiding(Opleiding opleiding)
+    {
+        
+    }
+    
+    public void voegModuleToe(Module module)
+    {
+    
+    }
+    
+    public void pasModuleAan(Module module)
+    {
+    
+    }
+    
+    public void verwijderModule(Module module)
+    {
+    
+    }
+    
+    public void voegPartimToe(Partim partim)
+    {
+    
+    }
+    
+    public void pasPartimAan(Partim partim)
+    {
+    
+    }
+    
+    public void verwijderPartim(Partim partim)
+    {
+    
     }
 }

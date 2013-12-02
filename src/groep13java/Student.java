@@ -21,7 +21,7 @@ public class Student {
     {
         return voornaam;
     }
-    public String familienaam()
+    public String getFamilienaam()
     {
         return familienaam;
     }

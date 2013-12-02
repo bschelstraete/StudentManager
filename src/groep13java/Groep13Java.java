@@ -23,7 +23,7 @@ public class Groep13Java {
         
         for(int i = 0; i < lijstje.size(); i++)
         {
-            System.out.println(lijstje.get(i).familienaam());
+            System.out.println(lijstje.get(i).getFamilienaam());
         }
     }
 }
