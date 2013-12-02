@@ -5,7 +5,6 @@
 package groep13java;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import javax.swing.JPanel;
 
 public class UIContentPanel extends JPanel{
@@ -13,7 +12,6 @@ public class UIContentPanel extends JPanel{
     public UIContentPanel()
     {
         super();
-        setLayout(new FlowLayout());
-        this.setPreferredSize(new Dimension(500, 500));
+        this.setPreferredSize(new Dimension(600, 600));
     }
 }

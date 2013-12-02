@@ -7,12 +7,12 @@ package groep13java;
 import javax.swing.JFrame;
 
 public class UIFrame extends JFrame{
-    private UIContentPanel contentPanel = new UIContentPanel();
+    private UICompetentieVerwijderenPanel compToevoegPanel = new UICompetentieVerwijderenPanel();
     private MenuBar menubar;
     
     public UIFrame()
     {
-        setContentPane(contentPanel);
+        setContentPane(compToevoegPanel);
         pack();
         menubar = new MenuBar();
         this.setJMenuBar(menubar);
