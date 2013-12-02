@@ -10,9 +10,9 @@ public class UIFrame extends JFrame{
     private UICompetentieVerwijderenPanel compToevoegPanel;
     private MenuBar menubar;
     
-    public UIFrame(User user)
+    public UIFrame()
     {   
-        compToevoegPanel = new UICompetentieVerwijderenPanel(user);
+        compToevoegPanel = new UICompetentieVerwijderenPanel();
         setContentPane(compToevoegPanel);
         pack();
         menubar = new MenuBar();
