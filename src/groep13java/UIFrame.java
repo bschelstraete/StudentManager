@@ -8,12 +8,15 @@ import javax.swing.JFrame;
 
 public class UIFrame extends JFrame{
     private UIContentPanel contentPanel = new UIContentPanel();
+    private MenuBar menubar;
     
     public UIFrame()
     {
         setContentPane(contentPanel);
         pack();
-        setVisible(true);             
+        menubar = new MenuBar();
+        this.setJMenuBar(menubar);
+        setVisible(true);   
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }
