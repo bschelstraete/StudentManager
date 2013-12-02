@@ -16,7 +16,7 @@ public class Module {
     {
         return id;
     }
-    public String naam()
+    public String getNaam()
     {
         return naam;
     }

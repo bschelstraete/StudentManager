@@ -326,36 +326,101 @@ public class DBaseSQL {
     
     public void verwijderOpleiding(Opleiding opleiding)
     {
-        
+        try
+        {
+            prepSt = conn.prepareStatement("DELETE FROM opleiding WHERE ID = " 
+                    + opleiding.getID());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT3
+        }   
     }
     
     public void voegModuleToe(Module module)
     {
-    
+        try
+        {
+            prepSt = conn.prepareStatement("INSERT INTO module(ID, naam) VALUES('?', '?')");
+            prepSt.setString(1, "NULL");
+            prepSt.setString(2, module.getNaam());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHITYO!
+        }
     }
     
     public void pasModuleAan(Module module)
     {
-    
+        try
+        {
+            prepSt = conn.prepareStatement("UPDATE module SET naam = '" + module.getNaam()
+                     + "' WHERE ID = " + module.getID());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT
+        }
     }
     
     public void verwijderModule(Module module)
     {
-    
+        try
+        {
+            prepSt = conn.prepareStatement("DELETE FROM module WHERE ID = " 
+                    + module.getID());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT3
+        }   
     }
     
     public void voegPartimToe(Partim partim)
     {
-    
+        try
+        {
+            prepSt = conn.prepareStatement("INSERT INTO partim(ID, naam) VALUES('?', '?')");
+            prepSt.setString(1, "NULL");
+            prepSt.setString(2, partim.getNaam());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHITYO!
+        }
     }
     
     public void pasPartimAan(Partim partim)
     {
-    
+        try
+        {
+            prepSt = conn.prepareStatement("UPDATE module SET naam = '" + partim.getNaam()
+                     + "' WHERE ID = " + partim.getID());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT
+        }
     }
     
     public void verwijderPartim(Partim partim)
     {
-    
+        try
+        {
+            prepSt = conn.prepareStatement("DELETE FROM partim WHERE ID = " 
+                    + partim.getID());
+            prepSt.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            //DOSOMESHIT3
+        }  
     }
 }
