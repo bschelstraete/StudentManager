@@ -11,6 +11,7 @@ package groep13java;
 public class Module {
     private Integer id;
     private String naam;
+    private Integer opleidingID;
     
     public Integer getID()
     {
@@ -20,10 +21,15 @@ public class Module {
     {
         return naam;
     }
+    public Integer getOpleidingID()
+    {
+        return opleidingID;
+    }
     
-    public Module(Integer id, String naam)
+    public Module(Integer id, String naam, Integer opleidingID)
     {
         this.id = id;
         this.naam = naam;
+        this.opleidingID = opleidingID;
     }
 }

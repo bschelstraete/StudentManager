@@ -11,6 +11,7 @@ package groep13java;
 public class Partim {
     private Integer id;
     private String naam;
+    private Integer moduleID;
     
     public Integer getID()
     {
@@ -21,10 +22,15 @@ public class Partim {
     {
         return naam;
     }
+    public Integer getModuleID()
+    {
+        return moduleID;
+    }
     
-    public Partim(Integer id, String naam)
+    public Partim(Integer id, String naam, Integer moduleID)
     {
         this.id = id;
         this.naam = naam;
+        this.moduleID = moduleID;
     }
 }

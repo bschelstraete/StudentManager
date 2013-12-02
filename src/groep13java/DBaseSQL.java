@@ -129,7 +129,8 @@ public class DBaseSQL {
             {
                 Integer id = rs.getInt("ID");
                 String naam = rs.getString("naam");
-                Module bufModule = new Module(id, naam);
+                Integer opleidingID = rs.getInt("oplID");
+                Module bufModule = new Module(id, naam, opleidingID);
                 moduleList.add(bufModule);
             }
         }
@@ -152,7 +153,8 @@ public class DBaseSQL {
             {
                 Integer id = rs.getInt("ID");
                 String naam = rs.getString("naam");
-                Partim bufPartim = new Partim(id, naam);
+                Integer moduleID = rs.getInt("modID");
+                Partim bufPartim = new Partim(id, naam, moduleID);
                 partimList.add(bufPartim);
             }
         }
@@ -342,9 +344,10 @@ public class DBaseSQL {
     {
         try
         {
-            prepSt = conn.prepareStatement("INSERT INTO module(ID, naam) VALUES('?', '?')");
+            prepSt = conn.prepareStatement("INSERT INTO module(ID, naam) VALUES(?, '?', ?)");
             prepSt.setString(1, "NULL");
             prepSt.setString(2, module.getNaam());
+            prepSt.setString(3, module.getOpleidingID().toString());
             prepSt.executeUpdate();
         }
         catch(SQLException e)
@@ -358,7 +361,8 @@ public class DBaseSQL {
         try
         {
             prepSt = conn.prepareStatement("UPDATE module SET naam = '" + module.getNaam()
-                     + "' WHERE ID = " + module.getID());
+                     + "', oplID = " + module.getOpleidingID() 
+                     + " WHERE ID = " + module.getID()) ;
             prepSt.executeUpdate();
         }
         catch(SQLException e)
@@ -401,7 +405,7 @@ public class DBaseSQL {
         try
         {
             prepSt = conn.prepareStatement("UPDATE module SET naam = '" + partim.getNaam()
-                     + "' WHERE ID = " + partim.getID());
+                     + "', modID = " + partim.getModuleID() +" WHERE ID = " + partim.getID());
             prepSt.executeUpdate();
         }
         catch(SQLException e)
