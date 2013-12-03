@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package groep13java.database;
+package groep13java.DAO;
 
 /**
  *
  * @author Jellyfish
  */
-public interface Observer {
-    public void updateComponents();
+public class IndicatorDAO {
+    
 }

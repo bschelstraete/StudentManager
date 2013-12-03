@@ -4,8 +4,8 @@
  */
 package groep13java.UI;
 
-import groep13java.database.MenuBar;
 import javax.swing.JFrame;
+import groep13java.main.User;
 
 public class UIFrame extends JFrame{
     private UICompetentieVerwijderenPanel compToevoegPanel;

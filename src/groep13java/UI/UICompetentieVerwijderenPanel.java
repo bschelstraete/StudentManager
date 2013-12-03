@@ -11,8 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
 /**
  *
  * @author Jellyfish
@@ -23,7 +21,7 @@ public class UICompetentieVerwijderenPanel extends JPanel{
     private JButton btnVerwijder;
     private JLabel label;
     private JScrollPane listScroller; 
-    private JTable compList = new JTable();
+    
     public UICompetentieVerwijderenPanel()
     {
         this.setLayout(new BorderLayout());
@@ -45,15 +43,11 @@ public class UICompetentieVerwijderenPanel extends JPanel{
         label = new JLabel("Competenties verwijderen uit de database:");
         listScroller = new JScrollPane();
         listScroller.setPreferredSize(new Dimension(350, 350));
-        
         listPanel.add(label);
         listPanel.add(listScroller);
     }
     
-    private JTable createCompetentieTable()
-    {
-        
-    }
+
     
     private void createButtonPanel()
     {
