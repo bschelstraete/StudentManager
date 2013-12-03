@@ -4,8 +4,8 @@
  */
 package groep13java.main;
 
-import groep13java.UI.UIFrame;
-import groep13java.database.DBaseSQL;
+import groep13java.UI.MainFrame;
+import groep13java.database.Database;
 import groep13java.Model.Student;
 import java.util.List;
 
@@ -19,9 +19,9 @@ public class MainProgram {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DBaseSQL dbase;
-        dbase = new DBaseSQL();
+        Database dbase;
+        dbase = new Database();
         List<Student> lijstje;
-        new UIFrame();
+        new MainFrame();
     }
 }

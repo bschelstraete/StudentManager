@@ -4,14 +4,12 @@
  */
 package groep13java.UI;
 
-import java.awt.Dimension;
 import javax.swing.JPanel;
 
-public class UIContentPanel extends JPanel{
+public class CompetentiePanel extends JPanel{
     
-    public UIContentPanel()
+    public CompetentiePanel()
     {
-        super();
-        this.setPreferredSize(new Dimension(600, 600));
+        
     }
 }

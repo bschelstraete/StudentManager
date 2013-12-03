@@ -1,12 +1,12 @@
-package groep13java.database;
+package groep13java.DAO;
 
 import java.sql.*;
 
-public class DBConnect {
-    private static DBConnect instance = new DBConnect();
+public class DAO {
+    private static DAO instance = new DAO();
     private Connection conn;
     
-    public static DBConnect getInstance()
+    public static DAO getInstance()
     {
         return instance;
     }
@@ -15,7 +15,7 @@ public class DBConnect {
         return conn;
     }
     
-    private DBConnect()
+    private DAO()
     {
        try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();

@@ -5,7 +5,6 @@
 package groep13java.DAO;
 
 import groep13java.Model.Student;
-import groep13java.database.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +18,7 @@ import java.util.List;
  * @author Jellyfish
  */
 public class StudentDAOImpl implements StudentDAO{
-    private DBConnect dbConnect = DBConnect.getInstance();
+    private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();
     private String stringSQL;
     private Statement st;

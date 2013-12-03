@@ -5,7 +5,6 @@
 package groep13java.DAO;
 
 import groep13java.Model.Deelcompetentie;
-import groep13java.database.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +18,7 @@ import java.util.List;
  * @author Jellyfish
  */
 public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
-    private DBConnect dbConnect = DBConnect.getInstance();
+    private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();
     private String stringSQL;
     private Statement st;
