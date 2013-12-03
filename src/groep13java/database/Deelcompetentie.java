@@ -2,29 +2,29 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package groep13java;
+package groep13java.database;
 
 /**
  *
  * @author Jellyfish
  */
-public class Opleiding {
+public class Deelcompetentie {
     private Integer id;
-    private String naam;
+    private String beschrijving;
     
     public Integer getID()
     {
         return id;
     }
     
-    public String getNaam()
+    public String getBeschrijving()
     {
-        return naam;
+        return beschrijving;
     }
     
-    public Opleiding(Integer id, String naam)
+    public Deelcompetentie(Integer id, String beschrijving)
     {
         this.id = id;
-        this.naam = naam;
+        this.beschrijving = beschrijving;
     }
 }

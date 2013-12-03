@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package groep13java;
+package groep13java.database;
 import java.sql.*;
-import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 

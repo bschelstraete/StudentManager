@@ -2,35 +2,34 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package groep13java;
+package groep13java.database;
 
 /**
  *
  * @author Jellyfish
  */
-public class Partim {
+public class Module {
     private Integer id;
     private String naam;
-    private Integer moduleID;
+    private Integer opleidingID;
     
     public Integer getID()
     {
         return id;
     }
-    
     public String getNaam()
     {
         return naam;
     }
-    public Integer getModuleID()
+    public Integer getOpleidingID()
     {
-        return moduleID;
+        return opleidingID;
     }
     
-    public Partim(Integer id, String naam, Integer moduleID)
+    public Module(Integer id, String naam, Integer opleidingID)
     {
         this.id = id;
         this.naam = naam;
-        this.moduleID = moduleID;
+        this.opleidingID = opleidingID;
     }
 }

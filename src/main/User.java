@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package groep13java;
+package main;
 
+import groep13java.database.Student;
+import groep13java.database.Observer;
+import groep13java.database.DBaseSQL;
 import java.util.List;
 import java.util.ArrayList;
 
