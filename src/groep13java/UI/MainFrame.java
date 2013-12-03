@@ -4,19 +4,23 @@
  */
 package groep13java.UI;
 
-import java.awt.BorderLayout;
+import groep13java.Controller.Controller;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame{
-    private ContentPane contentPane = new ContentPane();
+    private ContentPane contentPane;
+    StudentListPanel studentlistPane;
+    private Controller control;
+    
     public MainFrame()
     {   
         pack();
-        
-        this.setLayout(new BorderLayout());
+        control = new Controller();
+        contentPane = new ContentPane(control);
+        studentlistPane = new StudentListPanel(control);
         this.setSize(contentPane.getSize());
         setVisible(true);   
-        this.add(contentPane, BorderLayout.CENTER);
+        this.add(studentlistPane);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }

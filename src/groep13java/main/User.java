@@ -4,11 +4,13 @@
  */
 package groep13java.main;
 
+import groep13java.Controller.Controller;
+
 public class User {
-    
+    private Controller control = new Controller();
     
     public User()
     {
- 
+        
     }
 }

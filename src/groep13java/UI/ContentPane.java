@@ -4,8 +4,7 @@
  */
 package groep13java.UI;
 
-import java.awt.FlowLayout;
-import java.awt.Dimension;
+import groep13java.Controller.Controller;
 import javax.swing.JPanel;
 
 /**
@@ -13,13 +12,13 @@ import javax.swing.JPanel;
  * @author Jellyfish
  */
 public class ContentPane extends JPanel{
-    private Tabs tabbedPane = new Tabs();
-    public ContentPane()
+    private StudentListPanel studentListPane;
+    
+    public ContentPane(Controller control)
     {
         super();
-        this.setLayout(new FlowLayout());
-        this.setSize(new Dimension(600,600));
-        this.add(tabbedPane);
-               
+        studentListPane = new StudentListPanel(control);
+        this.setSize(studentListPane.getSize());
+        this.add(studentListPane);     
     }
 }

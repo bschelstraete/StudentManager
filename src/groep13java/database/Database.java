@@ -8,19 +8,20 @@ import groep13java.DAO.*;
 import groep13java.Model.Student;
 import java.sql.Connection;
 import java.util.List;
+import java.sql.SQLException;
 
 /**
  *
  * @author Jellyfish
  */
 public class Database {
-    private Connection conn;
-    private CompetentieDAOImpl competentieImp;
-    private DeelcompetentieDAOImpl deelcompetentieImp;
-    private ModuleDAOImpl moduleImp;
-    private OpleidingDAOImpl opleidingImp;
-    private PartimDAOImpl partimImp;
-    private StudentDAOImpl studentImp; 
+    private final Connection conn;
+    private final CompetentieDAOImpl competentieImp;
+    private final DeelcompetentieDAOImpl deelcompetentieImp;
+    private final ModuleDAOImpl moduleImp;
+    private final OpleidingDAOImpl opleidingImp;
+    private final PartimDAOImpl partimImp;
+    private final StudentDAOImpl studentImp; 
     
     public Database()
     {
@@ -33,7 +34,7 @@ public class Database {
         studentImp = new StudentDAOImpl();
     }
     
-    public List<Student> getStudenten()
+    public List<Student> getStudenten() throws SQLException
     {
         return studentImp.getStudenten();
     }

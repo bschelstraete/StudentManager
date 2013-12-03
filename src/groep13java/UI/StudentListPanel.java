@@ -4,53 +4,40 @@
  */
 package groep13java.UI;
 
-import groep13java.Model.Student;
+import groep13java.Controller.Controller;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.SQLException;
 import javax.swing.JPanel;
-import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-
 /**
  *
  * @author Jellyfish
  */
 public class StudentListPanel extends JPanel{
     private JScrollPane scrollPane;
+    private JLabel label;
+    private JList studentTable;
     
-    public StudentListPanel(List<Student> studentList)
+    public StudentListPanel(Controller control)
     {
         scrollPane = new JScrollPane();
-        JTable studentTable = putStudentsInTable(studentList);
-        this.setPreferredSize(new Dimension(600,600));
-        scrollPane.add(studentTable);
-        this.add(scrollPane);
-    }
-    
-    private JTable putStudentsInTable(List<Student> studentList)
-    {
-        String[] columnNames = {"ID", "Familienaam", "Voornaam"};
-        Object[][] data = null;
+        this.setLayout(new BorderLayout());
         
-        for(int i = 0; i < studentList.size(); i++)
+        this.setSize(new Dimension(600,600));
+        try
         {
-            for(int y = 0; y < 3; y++)
-            {
-                if(y == 0)
-                {
-                    data[i][y] = studentList.get(i).getID();
-                }
-                else if(y == 1)
-                {
-                    data[i][y] = studentList.get(i).getFamilienaam();
-                }
-                else
-                {
-                    data[i][y] = studentList.get(i).getVoornaam();
-                }
-            }
+            label = new JLabel("Lijst van studenten: ");
+            studentTable = new JList(control.getStudenten().toArray());
+            scrollPane.add(studentTable);
+            this.add(scrollPane, BorderLayout.CENTER);
         }
-        
-        return new JTable(data, columnNames);
+        catch(SQLException e)
+        {
+            label = new JLabel("Error: " + e.getMessage());
+        }
+        this.add(label, BorderLayout.NORTH);
     }
 }
