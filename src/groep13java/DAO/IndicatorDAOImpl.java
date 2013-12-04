@@ -46,6 +46,23 @@ public class IndicatorDAOImpl implements IndicatorDAO{
     }
     
     @Override
+    public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException
+    {
+        List<Indicator> indicatorList = new ArrayList();
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM indicator WHERE deelcompID = " + deelcompID;
+        ResultSet rs = st.executeQuery(stringSQL);
+        while(rs.next())
+        {
+            Integer id = rs.getInt("ID");
+            String beschrijving = rs.getString("beschrijving");
+            Indicator bufDeelcompetentie = new Indicator(id, beschrijving, deelcompID);
+            indicatorList.add(bufDeelcompetentie);
+        }
+        return indicatorList;
+    }
+    
+    @Override
     public Indicator getIndicator(Integer ID) throws SQLException {
         st = conn.createStatement();
         stringSQL = "SELECT * FROM module WHERE ID = " + ID;
@@ -53,4 +70,6 @@ public class IndicatorDAOImpl implements IndicatorDAO{
         Indicator module = new Indicator(rs.getInt("ID"), rs.getString("naam"), rs.getInt("deelcompID"));
         return module;
     }
+    
+
 }

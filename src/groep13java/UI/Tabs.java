@@ -23,7 +23,7 @@ public class Tabs extends JTabbedPane {
         competentiePane = new CompetentiePanel(user);
         this.add(studentPane, "Studenten");
         this.add(competentiePane, "Competenties");
-        this.setSize(600, 350);
+        this.setSize(750, 350);
         this.setVisible(true);
     }    
 }

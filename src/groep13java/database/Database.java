@@ -7,6 +7,7 @@ package groep13java.database;
 import groep13java.DAO.*;
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
+import groep13java.Model.Indicator;
 import groep13java.Model.Student;
 import java.sql.Connection;
 import java.util.List;
@@ -24,6 +25,7 @@ public class Database {
     private final OpleidingDAOImpl opleidingImp;
     private final PartimDAOImpl partimImp;
     private final StudentDAOImpl studentImp; 
+    private final IndicatorDAOImpl indicatorImp;
     
     public Database()
     {
@@ -34,6 +36,7 @@ public class Database {
         opleidingImp = new OpleidingDAOImpl();
         partimImp = new PartimDAOImpl();
         studentImp = new StudentDAOImpl();
+        indicatorImp = new IndicatorDAOImpl();
     }
     
     public List<Student> getStudenten() throws SQLException
@@ -53,6 +56,11 @@ public class Database {
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
     {
         return deelcompetentieImp.getDeelcompetentiesByCompetentieID(competentieID);
+    }
+    
+    public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException
+    {
+        return indicatorImp.getIndicatorsByDeelcompetentieID(deelcompID);
     }
     
 }

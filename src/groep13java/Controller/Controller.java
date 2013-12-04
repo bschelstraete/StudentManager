@@ -6,6 +6,7 @@ package groep13java.Controller;
 
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
+import groep13java.Model.Indicator;
 import groep13java.Model.Student;
 import groep13java.database.Database;
 import java.sql.SQLException;
@@ -40,5 +41,10 @@ public class Controller {
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
     {
         return db.getDeelcompetentiesByCompetentieID(competentieID);
+    }
+    
+    public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException
+    {
+        return db.getIndicatorsByDeelcompetentieID(deelcompID);
     }
 }

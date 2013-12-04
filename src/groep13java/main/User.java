@@ -7,6 +7,7 @@ package groep13java.main;
 import groep13java.Controller.Controller;
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
+import groep13java.Model.Indicator;
 import groep13java.Model.Student;
 import groep13java.Observer.Observer;
 import java.sql.SQLException;
@@ -41,5 +42,10 @@ public class User extends Observable{
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
     {
         return control.getDeelcompetentiesByCompetentieID(competentieID);
+    }
+    
+    public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompetentieID) throws SQLException
+    {
+        return control.getIndicatorsByDeelcompetentieID(deelcompetentieID);
     }
 }
