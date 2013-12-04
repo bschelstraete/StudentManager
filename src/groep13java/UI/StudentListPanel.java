@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 /**
@@ -28,14 +29,19 @@ public class StudentListPanel extends JPanel{
     
     public StudentListPanel(Controller control)
     {
-        
         this.setLayout(new BorderLayout());
-        
         this.setSize(new Dimension(600,600));
+        label = new JLabel("Lijst van studenten: ");
+        studentTable = vulTabelStudentIn(control);
+        scrollPane = new JScrollPane(studentTable);
+        this.add(scrollPane, BorderLayout.CENTER);
+        this.add(label, BorderLayout.NORTH);
+    }
+    
+    private JTable vulTabelStudentIn(Controller control)
+    {
         try
         {
-            label = new JLabel("Lijst van studenten: ");
-            
             studentList = control.getStudenten();
             studentObject = new Object[studentList.size()][3];
 
@@ -45,16 +51,11 @@ public class StudentListPanel extends JPanel{
                 studentObject[i][1] = studentList.get(i).getFamilienaam();
                 studentObject[i][2] = studentList.get(i).getVoornaam();
             }
-            studentTable = new JTable(studentObject, columnNames);
-            
-            scrollPane = new JScrollPane(studentTable);
-            this.add(scrollPane, BorderLayout.CENTER);
         }
         catch(SQLException e)
         {
-            label = new JLabel("Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        this.add(label, BorderLayout.NORTH);
+        return new JTable(studentObject, columnNames);
     }
-    
 }
