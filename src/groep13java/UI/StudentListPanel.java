@@ -28,7 +28,7 @@ public class StudentListPanel extends JPanel{
     
     public StudentListPanel(Controller control)
     {
-        scrollPane = new JScrollPane();
+        
         this.setLayout(new BorderLayout());
         
         this.setSize(new Dimension(600,600));
@@ -47,7 +47,7 @@ public class StudentListPanel extends JPanel{
             }
             studentTable = new JTable(studentObject, columnNames);
             
-            scrollPane.add(studentTable);
+            scrollPane = new JScrollPane(studentTable);
             this.add(scrollPane, BorderLayout.CENTER);
         }
         catch(SQLException e)
