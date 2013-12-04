@@ -49,26 +49,4 @@ public class PartimDAOImpl implements PartimDAO{
         Partim partim = new Partim(rs.getInt("ID"), rs.getString("naam"), rs.getInt("modID"));
         return partim;
     }
-
-    @Override
-    public void voegPartimToe(Partim partim) throws SQLException {
-        prepSt = conn.prepareStatement("INSERT INTO partim(ID, naam) VALUES('?', '?')");
-        prepSt.setString(1, "NULL");
-        prepSt.setString(2, partim.getNaam());
-        prepSt.executeUpdate();
-    }
-
-    @Override
-    public void pasPartimAan(Partim partim) throws SQLException {
-        prepSt = conn.prepareStatement("UPDATE module SET naam = '" + partim.getNaam()
-                 + "', modID = " + partim.getModuleID() +" WHERE ID = " + partim.getID());
-        prepSt.executeUpdate();
-    }
-
-    @Override
-    public void verwijderPartim(Partim partim) throws SQLException {
-        prepSt = conn.prepareStatement("DELETE FROM partim WHERE ID = " 
-                + partim.getID());
-        prepSt.executeUpdate();
-    }
 }

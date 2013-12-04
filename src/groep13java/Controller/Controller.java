@@ -4,6 +4,8 @@
  */
 package groep13java.Controller;
 
+import groep13java.Model.Competentie;
+import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Student;
 import groep13java.database.Database;
 import java.sql.SQLException;
@@ -24,5 +26,19 @@ public class Controller {
     public List<Student> getStudenten() throws SQLException
     {
         return db.getStudenten();
+    }
+    
+    public Student getStudent(Integer ID) throws SQLException
+    {
+        return db.getStudent(ID);
+    }
+
+    public List<Competentie> getCompetenties() throws SQLException{
+        return db.getCompetenties();
+    }
+    
+    public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
+    {
+        return db.getDeelcompetentiesByCompetentieID(competentieID);
     }
 }

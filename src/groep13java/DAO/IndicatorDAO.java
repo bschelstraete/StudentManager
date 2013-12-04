@@ -4,10 +4,16 @@
  */
 package groep13java.DAO;
 
+import groep13java.Model.Indicator;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Jellyfish
  */
-public class IndicatorDAO {
-    
+public interface IndicatorDAO{
+    public List<Indicator> getIndicators() throws SQLException;
+    public Indicator getIndicator(Integer ID) throws SQLException;
+
 }

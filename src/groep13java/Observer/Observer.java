@@ -8,6 +8,6 @@ package groep13java.Observer;
  *
  * @author Jellyfish
  */
-public class Observer {
-    
+public interface Observer {
+    public void updateComponents();
 }

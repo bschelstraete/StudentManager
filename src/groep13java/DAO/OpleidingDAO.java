@@ -15,7 +15,4 @@ import java.util.List;
 public interface OpleidingDAO {
     public List<Opleiding> getOpleidingen() throws SQLException;
     public Opleiding getOpleiding(Integer ID) throws SQLException;
-    public void voegOpleidingToe(Opleiding opleiding) throws SQLException;
-    public void pasOpleidingAan(Opleiding opleiding) throws SQLException;
-    public void verwijderOpleiding(Opleiding opleiding) throws SQLException;
 }

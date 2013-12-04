@@ -13,7 +13,4 @@ import java.util.List;
 public interface StudentDAO {
     public List<Student> getStudenten() throws SQLException;
     public Student getStudent(Integer ID) throws SQLException;
-    public void voegStudentToe(Student student) throws SQLException;
-    public void pasStudentAan(Student student) throws SQLException;
-    public void verwijderStudent(Student student) throws SQLException;
 }

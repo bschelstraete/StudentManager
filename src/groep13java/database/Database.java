@@ -5,6 +5,8 @@
 package groep13java.database;
 
 import groep13java.DAO.*;
+import groep13java.Model.Competentie;
+import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Student;
 import java.sql.Connection;
 import java.util.List;
@@ -38,4 +40,19 @@ public class Database {
     {
         return studentImp.getStudenten();
     }
+
+    public Student getStudent(Integer ID) throws SQLException
+    {
+        return studentImp.getStudent(ID);
+    }
+
+    public List<Competentie> getCompetenties() throws SQLException{
+       return competentieImp.getCompetenties();
+    }
+    
+    public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
+    {
+        return deelcompetentieImp.getDeelcompetentiesByCompetentieID(competentieID);
+    }
+    
 }

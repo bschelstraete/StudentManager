@@ -9,15 +9,31 @@ package groep13java.Model;
  * @author Jellyfish
  */
 public class Indicator {
-    private int id;
+    private Integer  id;
+    private String naam;
+    private Integer deelcompID;
     
-    public int getIndicator()
+    public Integer getID()
     {
         return id;
     }
     
-    public Indicator(int indicator)
+    public String getNaam()
     {
-        this.id = indicator;
+        return naam;
     }
+    
+    public Integer getDeelcompID()
+    {
+        return deelcompID;
+    }
+    
+    public Indicator(Integer id, String naam, Integer deelcompID)
+    {
+        this.id = id;
+        this.naam = naam;
+        this.deelcompID = deelcompID;
+    }
+    
+    
 }

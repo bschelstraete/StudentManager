@@ -4,23 +4,22 @@
  */
 package groep13java.UI;
 
-import groep13java.Controller.Controller;
+import groep13java.main.User;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame{
-    private ContentPane contentPane;
+    private Tabs tabbedPane;
     StudentListPanel studentlistPane;
-    private Controller control;
+    private User user;
     
     public MainFrame()
     {   
         pack();
-        control = new Controller();
-        contentPane = new ContentPane(control);
-        studentlistPane = new StudentListPanel(control);
-        this.setSize(contentPane.getSize());
+        user = new User();
+        tabbedPane = new Tabs(user);
+        this.setSize(tabbedPane.getSize());
         setVisible(true);   
-        this.add(studentlistPane);
+        this.add(tabbedPane);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }

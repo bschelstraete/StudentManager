@@ -48,30 +48,5 @@ public class ModuleDAOImpl implements ModuleDAO{
         ResultSet rs = st.executeQuery(stringSQL);
         Module module = new Module(rs.getInt("ID"), rs.getString("naam"), rs.getInt("oplID"));
         return module;
-    }
-
-    @Override
-    public void voegModuleToe(Module module) throws SQLException {
-        prepSt = conn.prepareStatement("INSERT INTO module(ID, naam) VALUES(?, '?', ?)");
-        prepSt.setString(1, "NULL");
-        prepSt.setString(2, module.getNaam());
-        prepSt.setString(3, module.getOpleidingID().toString());
-        prepSt.executeUpdate();
-    }
-
-    @Override
-    public void pasModuleAan(Module module) throws SQLException {
-        prepSt = conn.prepareStatement("UPDATE module SET naam = '" + module.getNaam()
-                 + "', oplID = " + module.getOpleidingID() 
-                 + " WHERE ID = " + module.getID()) ;
-        prepSt.executeUpdate();
-    }
-
-    @Override
-    public void verwijderModule(Module module) throws SQLException {
-         prepSt = conn.prepareStatement("DELETE FROM module WHERE ID = " 
-                + module.getID());
-        prepSt.executeUpdate();
-    }
-    
+    }  
 }

@@ -4,6 +4,7 @@
  */
 package groep13java.UI;
 
+import groep13java.main.User;
 import javax.swing.*;
 
 
@@ -12,16 +13,17 @@ import javax.swing.*;
  *
  * @author Jellyfish
  */
-public class Tabs extends JPanel {
-    JTabbedPane tabbedPane;
+public class Tabs extends JTabbedPane {
     CompetentiePanel competentiePane;
     StudentListPanel studentPane;
     
-    public Tabs()
+    public Tabs(User user)
     {
-        tabbedPane = new JTabbedPane();
-        competentiePane = new CompetentiePanel();
-        tabbedPane.addTab("Competenties", competentiePane);
-        tabbedPane.addTab("Studenten", studentPane);
+        studentPane = new StudentListPanel(user);
+        competentiePane = new CompetentiePanel(user);
+        this.add(studentPane, "Studenten");
+        this.add(competentiePane, "Competenties");
+        this.setSize(600, 350);
+        this.setVisible(true);
     }    
 }

@@ -15,7 +15,4 @@ import java.util.List;
 public interface ModuleDAO {
     public List<Module> getModules() throws SQLException;
     public Module getModule(Integer ID) throws SQLException;
-    public void voegModuleToe(Module module) throws SQLException;
-    public void pasModuleAan(Module module) throws SQLException;
-    public void verwijderModule(Module module) throws SQLException;
 }

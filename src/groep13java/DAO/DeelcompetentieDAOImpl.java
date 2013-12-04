@@ -40,7 +40,24 @@ public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
         }
         return deelcompetentieList;
     }
-
+    
+    @Override
+    public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
+    {
+        List<Deelcompetentie> deelcompetentieList = new ArrayList();
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM deelcompetentie d JOIN competentie_deelcompetentie cd ON d.ID = cd.deelcompID WHERE cd.compID = " + competentieID;
+        ResultSet rs = st.executeQuery(stringSQL);
+        while(rs.next())
+        {
+            Integer id = rs.getInt("ID");
+            String beschrijving = rs.getString("beschrijving");
+            Deelcompetentie bufDeelcompetentie = new Deelcompetentie(id, beschrijving);
+            deelcompetentieList.add(bufDeelcompetentie);
+        }
+        return deelcompetentieList;
+    }
+    
     @Override
     public Deelcompetentie getDeelcompetentie(Integer ID) throws SQLException{
         st = conn.createStatement();

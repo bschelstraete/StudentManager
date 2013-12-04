@@ -50,27 +50,4 @@ public class OpleidingDAOImpl implements OpleidingDAO{
         Opleiding opleiding = new Opleiding(rs.getInt("ID"), rs.getString("naam"));
         return opleiding;
     }
-
-    @Override
-    public void voegOpleidingToe(Opleiding opleiding) throws SQLException {
-        prepSt = conn.prepareStatement("INSERT INTO opleiding(ID, naam) VALUES('?', '?')");
-        prepSt.setString(1, "NULL");
-        prepSt.setString(2, opleiding.getNaam());
-        prepSt.executeUpdate();
-    }
-
-    @Override
-    public void pasOpleidingAan(Opleiding opleiding) throws SQLException {
-        prepSt = conn.prepareStatement("UPDATE opleiding SET naam = '" + opleiding.getNaam()
-                 + "' WHERE ID = " + opleiding.getID());
-        prepSt.executeUpdate();
-    }
-
-    @Override
-    public void verwijderOpleiding(Opleiding opleiding) throws SQLException {
-        prepSt = conn.prepareStatement("DELETE FROM opleiding WHERE ID = " 
-                + opleiding.getID());
-        prepSt.executeUpdate();
-    }
-    
 }

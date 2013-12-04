@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface DeelcompetentieDAO {
     public List<Deelcompetentie> getDeelcompetenties() throws SQLException;
+    public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException;
     public Deelcompetentie getDeelcompetentie(Integer ID) throws SQLException;
     public void voegDeelcompetentieToe(Deelcompetentie deelcompetentie) throws SQLException;
     public void pasDeelcompetentieAan(Deelcompetentie deelcompetentie) throws SQLException;
