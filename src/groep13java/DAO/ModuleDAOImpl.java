@@ -26,7 +26,7 @@ public class ModuleDAOImpl implements ModuleDAO{
     
     @Override
     public List<Module> getModules() throws SQLException {
-        ArrayList<Module> moduleList = new ArrayList();
+        List<Module> moduleList = new ArrayList();
         st = conn.createStatement();
         stringSQL = "SELECT * FROM module";
         ResultSet rs = st.executeQuery(stringSQL);

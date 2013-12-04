@@ -26,7 +26,7 @@ public class PartimDAOImpl implements PartimDAO{
 
     @Override
     public List<Partim> getPartims() throws SQLException {
-        ArrayList<Partim> partimList = new ArrayList();
+        List<Partim> partimList = new ArrayList();
         st = conn.createStatement();
         stringSQL = "SELECT * FROM partim";
         ResultSet rs = st.executeQuery(stringSQL);

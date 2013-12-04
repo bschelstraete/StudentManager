@@ -26,7 +26,7 @@ public class CompetentieDAOImpl implements CompetentieDAO {
     
     @Override
     public List<Competentie> getCompetenties() throws SQLException{
-        ArrayList<Competentie> competentieList = new ArrayList();
+        List<Competentie> competentieList = new ArrayList();
             st = conn.createStatement();
             stringSQL = "SELECT * FROM competentie";
             ResultSet rs = st.executeQuery(stringSQL);

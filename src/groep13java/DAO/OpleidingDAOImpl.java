@@ -26,7 +26,7 @@ public class OpleidingDAOImpl implements OpleidingDAO{
     
     @Override
     public List<Opleiding> getOpleidingen() throws SQLException {
-        ArrayList<Opleiding> opleidingList = new ArrayList();
+        List<Opleiding> opleidingList = new ArrayList();
         st = conn.createStatement();
         stringSQL = "SELECT * FROM opleiding";
         ResultSet rs = st.executeQuery(stringSQL);

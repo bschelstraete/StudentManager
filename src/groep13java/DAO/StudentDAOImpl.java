@@ -26,7 +26,7 @@ public class StudentDAOImpl implements StudentDAO{
     
     @Override
     public List<Student> getStudenten() throws SQLException {
-      ArrayList<Student> studentList = new ArrayList();
+      List<Student> studentList = new ArrayList();
         st = conn.createStatement();
         stringSQL = "SELECT * FROM student";
         ResultSet rs = st.executeQuery(stringSQL);
