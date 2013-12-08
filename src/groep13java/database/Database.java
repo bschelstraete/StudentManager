@@ -53,6 +53,11 @@ public class Database {
        return competentieImp.getCompetenties();
     }
     
+    public void voegCompetentieToe(String newCompetentie) throws SQLException
+    {
+        competentieImp.voegCompetentieToe(newCompetentie);
+    }
+    
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
     {
         return deelcompetentieImp.getDeelcompetentiesByCompetentieID(competentieID);
@@ -63,4 +68,5 @@ public class Database {
         return indicatorImp.getIndicatorsByDeelcompetentieID(deelcompID);
     }
     
+
 }

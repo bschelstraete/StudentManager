@@ -9,5 +9,5 @@ package groep13java.Observer;
  * @author Jellyfish
  */
 public interface Observer {
-    public void updateComponents();
+    public void update();
 }

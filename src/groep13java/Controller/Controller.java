@@ -38,6 +38,11 @@ public class Controller {
         return db.getCompetenties();
     }
     
+    public void voegCompetentieToe(String newCompetentie) throws SQLException
+    {
+        db.voegCompetentieToe(newCompetentie);
+    }
+    
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
     {
         return db.getDeelcompetentiesByCompetentieID(competentieID);

@@ -51,10 +51,8 @@ public class CompetentieDAOImpl implements CompetentieDAO {
     }
 
     @Override
-    public void voegCompetentieToe(Competentie competentie)  throws SQLException{
-            prepSt = conn.prepareStatement("INSERT INTO competentie(ID, beschrijving) VALUES('?', '?')");
-            prepSt.setString(1, "NULL");
-            prepSt.setString(2, competentie.getBeschrijving());
+    public void voegCompetentieToe(String newCompetentie)  throws SQLException{
+            prepSt = conn.prepareStatement("INSERT INTO competentie(beschrijving) VALUES('" + newCompetentie + "')");
             prepSt.executeUpdate();
     }
 

@@ -48,4 +48,11 @@ public class User extends Observable{
     {
         return control.getIndicatorsByDeelcompetentieID(deelcompetentieID);
     }
+    
+    public void voegCompetentieToe(String newCompetentie) throws SQLException
+    {
+        control.voegCompetentieToe(newCompetentie);
+        setChanged();
+        notifyObservers();
+    }
 }

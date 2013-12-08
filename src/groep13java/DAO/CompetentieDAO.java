@@ -15,7 +15,7 @@ import java.util.List;
 public interface CompetentieDAO {
     public List<Competentie> getCompetenties() throws SQLException;
     public Competentie getCompetentie(Integer ID)  throws SQLException;
-    public void voegCompetentieToe(Competentie competentie)  throws SQLException;
+    public void voegCompetentieToe(String newCompetentie)  throws SQLException;
     public void pasCompetentieAan(Competentie competentie)  throws SQLException;
     public void verwijderCompetentie(Competentie competentie)  throws SQLException;    
 }

@@ -5,6 +5,7 @@
 package groep13java.UI;
 
 import groep13java.main.User;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 
 public class MainFrame extends JFrame{
