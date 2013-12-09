@@ -19,9 +19,6 @@ public class MainProgram {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Database dbase;
-        dbase = new Database();
-        List<Student> lijstje;
         new MainFrame();
     }
 }

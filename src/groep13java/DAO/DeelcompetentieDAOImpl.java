@@ -63,16 +63,18 @@ public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
         st = conn.createStatement();
         stringSQL = "SELECT * FROM competentie WHERE ID = " + ID;
         ResultSet rs = st.executeQuery(stringSQL);
-        Deelcompetentie deelcompetentie = new Deelcompetentie(rs.getInt("ID"), rs.getString("beschrijving"));
-        return deelcompetentie;
+        String beschrijving = "";
+        while(rs.next())
+        {
+            beschrijving = rs.getString("beschrijving");
+        }
+        return new Deelcompetentie(ID, beschrijving);
     }
 
     @Override
-    public void voegDeelcompetentieToe(Deelcompetentie deelcompetentie) throws SQLException {
-        prepSt = conn.prepareStatement("INSERT INTO deelcompetentie (ID, beschrijving) VALUES('?', '?')");
-        prepSt.setString(1, "NULL");
-        prepSt.setString(2, deelcompetentie.getBeschrijving());
-        prepSt.executeUpdate();
+    public void voegDeelcompetentieToe(String beschrijving) throws SQLException {
+            prepSt = conn.prepareStatement("INSERT INTO deelcompetentie(beschrijving) VALUES('" + beschrijving + "')");
+            prepSt.executeUpdate();
     }
 
     @Override
@@ -92,10 +94,14 @@ public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
 
     public Deelcompetentie getDeelcompetentieByBeschrijving(String beschrijving) throws SQLException{
         st = conn.createStatement();
-        stringSQL = "SELECT * FROM competentie WHERE beschrijving = '" + beschrijving + "'";
+        stringSQL = "SELECT * FROM deelcompetentie WHERE beschrijving = '" + beschrijving + "'";
         ResultSet rs = st.executeQuery(stringSQL);
-        Deelcompetentie deelcompetentie = new Deelcompetentie(rs.getInt("ID"), rs.getString("beschrijving"));
-        return deelcompetentie;
+        Integer ID = 0;
+        while(rs.next())
+        {
+            ID = rs.getInt("ID");
+        }
+        return new Deelcompetentie(ID, beschrijving);
     }
     
 }

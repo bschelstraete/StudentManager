@@ -22,8 +22,7 @@ public class CompetentieOnDeelcompetentieDAOImpl implements CompetentieOnDeelcom
     
     @Override
     public void koppelDeelCompetentieAanCompetentie(Integer compID, Integer deelcompID) throws SQLException {
-        prepSt = conn.prepareStatement("INSERT INTO TABLE competentie_deelcompetentie(compID, deelcompID) "
-                                      + "VALUES('" + compID + ", " + deelcompID + ")");
+        prepSt = conn.prepareStatement("INSERT INTO competentie_deelcompetentie(compID, deelcompID) VALUES(" + compID + ", " + deelcompID + ")");
         prepSt.executeUpdate();
     }
     

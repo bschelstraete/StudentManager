@@ -66,6 +66,11 @@ public class Controller {
     {
         db.koppelDeelcompetentieAanCompetentie(compID, deelcompID);
     }
+
+    public void voegDeelcompetentieToe(String beschrijving) throws SQLException
+    {
+        db.voegDeelcompetentieToe(beschrijving);
+    }
     
     
 }

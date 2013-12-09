@@ -43,11 +43,15 @@ public class CompetentieDAOImpl implements CompetentieDAO {
 
     @Override
     public Competentie getCompetentie(Integer ID) throws SQLException{
-            st = conn.createStatement();
-            stringSQL = "SELECT * FROM competentie WHERE ID = " + ID;
-            ResultSet rs = st.executeQuery(stringSQL);
-            Competentie competentie = new Competentie(rs.getInt("ID"), rs.getString("beschrijving"));
-        return competentie;
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM competentie WHERE ID = " + ID;
+        ResultSet rs = st.executeQuery(stringSQL);
+        String beschrijving = "";
+        while(rs.next())
+        {
+            beschrijving = rs.getString("beschrijving");
+        }    
+        return new Competentie(ID, beschrijving);
     }
     
     @Override
@@ -56,8 +60,12 @@ public class CompetentieDAOImpl implements CompetentieDAO {
         st = conn.createStatement();
         stringSQL = "SELECT * FROM competentie WHERE beschrijving = '" + beschrijving + "'";
         ResultSet rs = st.executeQuery(stringSQL);
-        Competentie competentie = new Competentie(rs.getInt("ID"), rs.getString("beschrijving"));
-        return competentie;
+        Integer ID = 0;
+        while(rs.next())
+        {
+            ID = rs.getInt("ID");
+        }
+        return new Competentie(ID, beschrijving);
     }
 
     @Override

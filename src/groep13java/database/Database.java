@@ -81,7 +81,12 @@ public class Database {
 
     public Deelcompetentie getDeelcompetentieByBeschrijving(String beschrijving) throws SQLException
     {
-        deelcompetentieImp.getDeelcompetentieByBeschrijving(beschrijving);
+        return deelcompetentieImp.getDeelcompetentieByBeschrijving(beschrijving);
+    }
+
+    public void voegDeelcompetentieToe(String beschrijving) throws SQLException
+    {
+        deelcompetentieImp.voegDeelcompetentieToe(beschrijving);
     }
 
 }

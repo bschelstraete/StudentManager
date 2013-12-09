@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 public class CompetentiePanel extends JPanel implements Observer{
     private JTree competentieTree;
@@ -49,23 +51,29 @@ public class CompetentiePanel extends JPanel implements Observer{
     {        
         this.user = user;
         user.addObserver(this);
+            
+        this.setLayout(new BorderLayout());
         
+        resetTree();                 
+    }
+    
+    private void resetTree()
+    {
+        this.removeAll();
         topNode = new DefaultMutableTreeNode("Competenties");    
         treeModel = new DefaultTreeModel(topNode);
         initCompetentieTree(user);
         competentieTree = new JTree(treeModel);
         competentieListPane = new JScrollPane(competentieTree);
-        
-        this.setLayout(new BorderLayout());
-        
-
+        this.add(competentieListPane, BorderLayout.CENTER);
         
         createSouthButtonPanel();
         createEastButtonPanel();
-        
         this.add(eastButtonPanel, BorderLayout.EAST);
-        this.add(competentieListPane, BorderLayout.CENTER);
-        this.add(southButtonPanel, BorderLayout.SOUTH);        
+        this.add(southButtonPanel, BorderLayout.SOUTH);
+        
+        this.validate();
+        this.repaint();
     }
     
     @Override
@@ -206,7 +214,7 @@ public class CompetentiePanel extends JPanel implements Observer{
     {
         try
         {
-        if(!beschrijving.equals(""))
+        if(beschrijving != null)
             {
                 user.voegCompetentieToe(beschrijving);
                 treeModel.insertNodeInto(new DefaultMutableTreeNode(beschrijving), topNode, topNode.getChildCount());
@@ -225,40 +233,43 @@ public class CompetentiePanel extends JPanel implements Observer{
     
     private void addNewDeelcompetentie() 
     {
-        String[] keuzeCompetentie = new String[competentieList.size()];
+        try
+        {    
+            competentieList = user.getCompetenties();
+            String[] keuzeCompetentie = new String[competentieList.size()];
+            for(int i=0; i < competentieList.size();i++)
+            {
+                    keuzeCompetentie[i] = competentieList.get(i).getBeschrijving();
+            }
 
-	for(int i=0; i < competentieList.size();i++)
-	{
-		keuzeCompetentie[i] = competentieList.get(i).getBeschrijving();
-	}
+            String keuze = (String)JOptionPane.showInputDialog(this, "Kies een competentie: ", 
+                                                            "Keuze", JOptionPane.PLAIN_MESSAGE, null, 
+                                                            keuzeCompetentie, null);
 
-	String keuze = (String)JOptionPane.showInputDialog(this, "Kies een competentie: ", 
-							"Keuze", JOptionPane.PLAIN_MESSAGE, null, 
-							keuzeCompetentie, null);
-
-	String beschrijving = JOptionPane.showInputDialog(null, "Nieuwe deelcompetentie invoegen:");
-	try
-	{
-		user.voegDeelcompetentieToe(beschrijving);
+            String beschrijving = JOptionPane.showInputDialog(this, "Nieuwe deelcompetentie invoegen:");
+            if(beschrijving != null)
+            {
+                    user.voegDeelcompetentieToe(beschrijving); 
+                    koppelDeelcompetentieAanCompetentie(keuze, beschrijving);
+                    resetTree();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Beschrijving van de nieuwe deelcompetentie mag niet leeg zijn!");
+            }
 	}
 	catch(SQLException e)
 	{
 		JOptionPane.showMessageDialog(this, e.getMessage());
 	}
 
-	koppelDeelcompetentieAanCompetentie(keuze, beschrijving);
+	
     }
+
     
-    private void koppelDeelcompetentieAanCompetentie(String compBeschrijving, String deelcompBeschrijving)
+    private void koppelDeelcompetentieAanCompetentie(String compBeschrijving, String deelcompBeschrijving) throws SQLException
     {
-	try
-	{
 		user.koppelDeelcompetentieAanCompetentie(compBeschrijving, deelcompBeschrijving);
-	}
-	catch(SQLException e)
-	{
-		JOptionPane.showMessageDialog(this, e.getMessage());
-	}
     }
     
     private void addNewIndicator() 
