@@ -38,7 +38,7 @@ public class User extends Observable{
     {
         return control.getCompetenties();
     }
-    
+
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
     {
         return control.getDeelcompetentiesByCompetentieID(competentieID);
@@ -54,5 +54,20 @@ public class User extends Observable{
         control.voegCompetentieToe(newCompetentie);
         setChanged();
         notifyObservers();
+    }
+    
+    public void koppelDeelcompetentieAanCompetentie(String compBeschrijving, String deelcompBeschrijving) throws SQLException
+    {
+        control.koppelDeelcompetentieAanCompetentie(getCompetentieByBeschrijving(compBeschrijving).getID(), getDeelcompetentieByBeschrijving(deelcompBeschrijving).getID());
+    }
+
+    private Competentie getCompetentieByBeschrijving(String compBeschrijving) throws SQLException
+    {
+        return control.getCompetentieByBeschrijving(compBeschrijving);
+    }
+
+    private Deelcompetentie getDeelcompetentieByBeschrijving(String deelcompBeschrijving) throws SQLException
+    {
+        return control.getDeelcompetentieByBeschrijving(deelcompBeschrijving);
     }
 }

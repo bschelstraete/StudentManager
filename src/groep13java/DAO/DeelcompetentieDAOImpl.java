@@ -89,5 +89,13 @@ public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
                 + deelcompetentie.getID());
         prepSt.executeUpdate();
     }
+
+    public Deelcompetentie getDeelcompetentieByBeschrijving(String beschrijving) throws SQLException{
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM competentie WHERE beschrijving = '" + beschrijving + "'";
+        ResultSet rs = st.executeQuery(stringSQL);
+        Deelcompetentie deelcompetentie = new Deelcompetentie(rs.getInt("ID"), rs.getString("beschrijving"));
+        return deelcompetentie;
+    }
     
 }

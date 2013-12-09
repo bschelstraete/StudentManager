@@ -149,6 +149,7 @@ public class CompetentiePanel extends JPanel implements Observer{
         
         toevoegButton = new JButton("Toevoegen");
         toevoegButton.addActionListener(new ActionListener(){
+            @Override
             public void actionPerformed(ActionEvent e){
                 addNewObject();
             }
@@ -185,18 +186,17 @@ public class CompetentiePanel extends JPanel implements Observer{
         String keuze = (String)JOptionPane.showInputDialog(this, "Kies een waarde: ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, keuzeStrings, null);
         if(!keuze.equals(""))
         {
-            String beschrijving = JOptionPane.showInputDialog(null, "Nieuwe competentie invoegen:");
-
             switch(keuze)
             {
                 case "Competentie":
+                    String beschrijving = JOptionPane.showInputDialog(null, "Nieuwe " + keuze + " invoegen:");
                     addNewCompetentie(beschrijving);
                     break;
                 case "Deelcompetentie":
-                    addNewDeelcompetentie(beschrijving);
+                    addNewDeelcompetentie();
                     break;
                 case "Indicator":
-                    addNewIndicator(beschrijving);
+                    addNewIndicator();
                     break;
             }
         }
@@ -223,19 +223,46 @@ public class CompetentiePanel extends JPanel implements Observer{
         }
     }
     
-    private void addNewDeelcompetentie(String beschrijving) 
+    private void addNewDeelcompetentie() 
+    {
+        String[] keuzeCompetentie = new String[competentieList.size()];
+
+	for(int i=0; i < competentieList.size();i++)
+	{
+		keuzeCompetentie[i] = competentieList.get(i).getBeschrijving();
+	}
+
+	String keuze = (String)JOptionPane.showInputDialog(this, "Kies een competentie: ", 
+							"Keuze", JOptionPane.PLAIN_MESSAGE, null, 
+							keuzeCompetentie, null);
+
+	String beschrijving = JOptionPane.showInputDialog(null, "Nieuwe deelcompetentie invoegen:");
+	try
+	{
+		user.voegDeelcompetentieToe(beschrijving);
+	}
+	catch(SQLException e)
+	{
+		JOptionPane.showMessageDialog(this, e.getMessage());
+	}
+
+	koppelDeelcompetentieAanCompetentie(keuze, beschrijving);
+    }
+    
+    private void koppelDeelcompetentieAanCompetentie(String compBeschrijving, String deelcompBeschrijving)
+    {
+	try
+	{
+		user.koppelDeelcompetentieAanCompetentie(compBeschrijving, deelcompBeschrijving);
+	}
+	catch(SQLException e)
+	{
+		JOptionPane.showMessageDialog(this, e.getMessage());
+	}
+    }
+    
+    private void addNewIndicator() 
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    private void addNewIndicator(String beschrijving) 
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
- 
-
-  
-
-
 }

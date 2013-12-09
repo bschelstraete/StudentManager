@@ -37,6 +37,10 @@ public class Controller {
     public List<Competentie> getCompetenties() throws SQLException{
         return db.getCompetenties();
     }
+    public Competentie getCompetentieByBeschrijving(String beschrijving) throws SQLException
+    {
+        return db.getCompetentieByBeschrijving(beschrijving);
+    }
     
     public void voegCompetentieToe(String newCompetentie) throws SQLException
     {
@@ -48,8 +52,20 @@ public class Controller {
         return db.getDeelcompetentiesByCompetentieID(competentieID);
     }
     
+    public Deelcompetentie getDeelcompetentieByBeschrijving(String beschrijving) throws SQLException
+    {
+        return db.getDeelcompetentieByBeschrijving(beschrijving);
+    }
+    
     public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException
     {
         return db.getIndicatorsByDeelcompetentieID(deelcompID);
     }
+    
+    public void koppelDeelcompetentieAanCompetentie(Integer compID, Integer deelcompID) throws SQLException
+    {
+        db.koppelDeelcompetentieAanCompetentie(compID, deelcompID);
+    }
+    
+    
 }

@@ -26,7 +26,7 @@ public class Database {
     private final PartimDAOImpl partimImp;
     private final StudentDAOImpl studentImp; 
     private final IndicatorDAOImpl indicatorImp;
-    
+    private final CompetentieOnDeelcompetentieDAOImpl competentieOnDeelcompetentieImpl;
     public Database()
     {
         conn = DAO.getInstance().getConnection();
@@ -37,6 +37,7 @@ public class Database {
         partimImp = new PartimDAOImpl();
         studentImp = new StudentDAOImpl();
         indicatorImp = new IndicatorDAOImpl();
+        competentieOnDeelcompetentieImpl = new CompetentieOnDeelcompetentieDAOImpl();
     }
     
     public List<Student> getStudenten() throws SQLException
@@ -51,6 +52,11 @@ public class Database {
 
     public List<Competentie> getCompetenties() throws SQLException{
        return competentieImp.getCompetenties();
+    }
+    
+    public Competentie getCompetentieByBeschrijving(String beschrijving) throws SQLException
+    {
+          return competentieImp.getCompetentieByBeschrijving(beschrijving);
     }
     
     public void voegCompetentieToe(String newCompetentie) throws SQLException
@@ -68,5 +74,14 @@ public class Database {
         return indicatorImp.getIndicatorsByDeelcompetentieID(deelcompID);
     }
     
+    public void koppelDeelcompetentieAanCompetentie(Integer compID, Integer deelcompID) throws SQLException
+    {
+        competentieOnDeelcompetentieImpl.koppelDeelCompetentieAanCompetentie(compID, deelcompID);
+    }
+
+    public Deelcompetentie getDeelcompetentieByBeschrijving(String beschrijving) throws SQLException
+    {
+        deelcompetentieImp.getDeelcompetentieByBeschrijving(beschrijving);
+    }
 
 }

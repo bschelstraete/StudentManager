@@ -49,6 +49,16 @@ public class CompetentieDAOImpl implements CompetentieDAO {
             Competentie competentie = new Competentie(rs.getInt("ID"), rs.getString("beschrijving"));
         return competentie;
     }
+    
+    @Override
+    public Competentie getCompetentieByBeschrijving(String beschrijving) throws SQLException
+    {
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM competentie WHERE beschrijving = '" + beschrijving + "'";
+        ResultSet rs = st.executeQuery(stringSQL);
+        Competentie competentie = new Competentie(rs.getInt("ID"), rs.getString("beschrijving"));
+        return competentie;
+    }
 
     @Override
     public void voegCompetentieToe(String newCompetentie)  throws SQLException{
