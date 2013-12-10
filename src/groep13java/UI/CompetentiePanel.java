@@ -10,14 +10,10 @@ import groep13java.Model.Indicator;
 import groep13java.Observer.Observer;
 import groep13java.main.User;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.List;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,7 +21,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
 
 public class CompetentiePanel extends JPanel implements Observer{
     private JTree competentieTree;
@@ -38,9 +33,6 @@ public class CompetentiePanel extends JPanel implements Observer{
     private JButton toevoegButton;
     private JButton aanpasButton;
     private JButton verwijderButton;
-    private JPanel eastButtonPanel;
-    private JButton koppelCompetentieButton;
-    private JButton koppelIndicatorButton;
     private JScrollPane competentieListPane;
     private List<Competentie> competentieList;
     private List<Deelcompetentie> deelcompetentieList;
@@ -57,6 +49,34 @@ public class CompetentiePanel extends JPanel implements Observer{
         resetTree();                 
     }
     
+    private void createSouthButtonPanel()
+    {
+        southButtonPanel = new JPanel();
+        southButtonPanel.setLayout(new FlowLayout());
+        
+        toevoegButton = new JButton("Toevoegen");
+        toevoegButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                addNewObject();
+            }
+        });
+        
+        aanpasButton = new JButton("Aanpassen");
+        aanpasButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                editObject();
+            }
+        });
+        verwijderButton = new JButton("Verwijderen");
+        
+        southButtonPanel.add(toevoegButton);
+        southButtonPanel.add(aanpasButton);
+        southButtonPanel.add(verwijderButton);
+    }
+    
     private void resetTree()
     {
         this.removeAll();
@@ -68,8 +88,6 @@ public class CompetentiePanel extends JPanel implements Observer{
         this.add(competentieListPane, BorderLayout.CENTER);
         
         createSouthButtonPanel();
-        createEastButtonPanel();
-        this.add(eastButtonPanel, BorderLayout.EAST);
         this.add(southButtonPanel, BorderLayout.SOUTH);
         
         this.validate();
@@ -88,33 +106,39 @@ public class CompetentiePanel extends JPanel implements Observer{
     
     private void vulCompetentieTreeIn(DefaultMutableTreeNode topNode, User user)
     {
-        vulCompetentieLijstIn(user);    
+        vulCompetentieLijstIn();    
         for(int i = 0; i < competentieList.size(); i++)
         {
             competentieNode = new DefaultMutableTreeNode(competentieList.get(i).getBeschrijving()); 
-            treeModel.insertNodeInto(competentieNode, topNode, i);
-            vulDeelCompetentieTreeIn(competentieNode, i, user);
+            topNode.add(competentieNode);
+            vulDeelCompetentieTreeIn(competentieNode, competentieList.get(i).getID());
         }
 
     }
     
-    private void vulDeelCompetentieTreeIn(DefaultMutableTreeNode competentieNode, int index, User user)
+    private void vulDeelCompetentieTreeIn(DefaultMutableTreeNode competentieNode, Integer competentieID)
     {
         
-        vulDeelcompetentieLijstIn(user, index);
+        vulDeelcompetentieLijstIn(competentieID);
         for(int i = 0; i < deelcompetentieList.size(); i++)
         {
             deelcompetentieNode = new DefaultMutableTreeNode(deelcompetentieList.get(i).getBeschrijving());
-            treeModel.insertNodeInto(deelcompetentieNode, competentieNode, i);
+            competentieNode.add(deelcompetentieNode);
+            vulIndicatorTreeIn(deelcompetentieNode, deelcompetentieList.get(i).getID());
         }
     }
     
-    private void vulIndicatorTreeIn(DefaultMutableTreeNode deelcompetentieNode)
+    private void vulIndicatorTreeIn(DefaultMutableTreeNode deelcompetentieNode, Integer deelcompetentieID)
     {
-    
+        vulIndicatorLijstIn(deelcompetentieID);
+        for (int i = 0; i < indicatorList.size(); i++)
+        {
+            indicatorNode = new DefaultMutableTreeNode(indicatorList.get(i).getNaam());
+            deelcompetentieNode.add(indicatorNode);
+        }
     }
     
-    private void vulCompetentieLijstIn(User user)
+    private void vulCompetentieLijstIn()
     {
         try
         {
@@ -126,11 +150,11 @@ public class CompetentiePanel extends JPanel implements Observer{
         }
     }
     
-    private void vulDeelcompetentieLijstIn(User user, int compID)
+    private void vulDeelcompetentieLijstIn(int compID)
     {
         try
         {
-            deelcompetentieList = user.getDeelcompetentiesByCompetentieID(compID + 1);
+            deelcompetentieList = user.getDeelcompetentiesByCompetentieID(compID);
         }
         catch(SQLException e)
         {
@@ -138,53 +162,16 @@ public class CompetentiePanel extends JPanel implements Observer{
         }
     }
     
-    private void vulIndicatorLijstIn(User user, int deelcompID)
+    private void vulIndicatorLijstIn(int deelcompID)
     {
         try
         {
-            indicatorList = user.getIndicatorsByDeelcompetentieID(deelcompID + 1);
+            indicatorList = user.getIndicatorsByDeelcompetentieID(deelcompID);
         }
         catch(SQLException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }
-    
-    private void createSouthButtonPanel()
-    {
-        southButtonPanel = new JPanel();
-        southButtonPanel.setLayout(new FlowLayout());
-        
-        toevoegButton = new JButton("Toevoegen");
-        toevoegButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                addNewObject();
-            }
-        });
-        
-        aanpasButton = new JButton("Aanpassen");
-        verwijderButton = new JButton("Verwijderen");
-        
-        southButtonPanel.add(toevoegButton);
-        southButtonPanel.add(aanpasButton);
-        southButtonPanel.add(verwijderButton);
-    }
-    
-    private void createEastButtonPanel()
-    {
-        eastButtonPanel = new JPanel();
-        eastButtonPanel.setLayout(new BoxLayout(eastButtonPanel, BoxLayout.Y_AXIS));
-        
-        
-        koppelCompetentieButton = new JButton("Koppel deelcompetentie aan competentie");
-        koppelCompetentieButton.setSize(30, 30);
-        koppelIndicatorButton = new JButton("Koppel indicator aan partim");
-        koppelIndicatorButton.setSize(30,30);
-        
-        eastButtonPanel.add(koppelCompetentieButton);
-        eastButtonPanel.add(Box.createRigidArea(new Dimension(20,20)));
-        eastButtonPanel.add(koppelIndicatorButton);
     }
     
     private void addNewObject()
@@ -209,6 +196,7 @@ public class CompetentiePanel extends JPanel implements Observer{
             }
         }
     }
+    
     
     private void addNewCompetentie(String beschrijving)
     {
@@ -235,17 +223,9 @@ public class CompetentiePanel extends JPanel implements Observer{
     {
         try
         {    
-            competentieList = user.getCompetenties();
-            String[] keuzeCompetentie = new String[competentieList.size()];
-            for(int i=0; i < competentieList.size();i++)
-            {
-                    keuzeCompetentie[i] = competentieList.get(i).getBeschrijving();
-            }
-
             String keuze = (String)JOptionPane.showInputDialog(this, "Kies een competentie: ", 
                                                             "Keuze", JOptionPane.PLAIN_MESSAGE, null, 
-                                                            keuzeCompetentie, null);
-
+                                                            initKeuzeString("Competentie"), null);
             String beschrijving = JOptionPane.showInputDialog(this, "Nieuwe deelcompetentie invoegen:");
             if(beschrijving != null)
             {
@@ -266,14 +246,132 @@ public class CompetentiePanel extends JPanel implements Observer{
 	
     }
 
-    
     private void koppelDeelcompetentieAanCompetentie(String compBeschrijving, String deelcompBeschrijving) throws SQLException
     {
-		user.koppelDeelcompetentieAanCompetentie(compBeschrijving, deelcompBeschrijving);
+        user.koppelDeelcompetentieAanCompetentie(compBeschrijving, deelcompBeschrijving);
     }
     
     private void addNewIndicator() 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            String keuze = (String)JOptionPane.showInputDialog(this, "Kies een deelcompetentie waar je een indicator wil aan toevoegen: ", 
+                                                        "Keuze", JOptionPane.PLAIN_MESSAGE, null, 
+                                                         initKeuzeString("Deelcompetentie"), null);
+            String beschrijving = JOptionPane.showInputDialog(this, "Nieuwe indicator invoegen:");
+            
+            if(beschrijving != null)
+            {
+                user.voegIndicatorToe(beschrijving, keuze);
+                resetTree();
+            } 
+            else 
+            {
+                JOptionPane.showMessageDialog(this, "Indicatorbeschrijving mag niet leeg zijn!");
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
+    
+    private String[] initKeuzeString(String keuze) throws SQLException
+    {
+        switch (keuze) {
+            case "Competentie":
+                competentieList = user.getCompetenties();
+                String[] compStrings = new String[competentieList.size()];
+                for(int i = 0; i < compStrings.length; i++)
+                {
+                    compStrings[i] = competentieList.get(i).getBeschrijving();
+                }
+                return compStrings;
+
+            case "Deelcompetentie":
+                deelcompetentieList = user.getDeelcompetenties();
+                String[] deelcompStrings = new String[deelcompetentieList.size()];
+                for(int i = 0; i < deelcompetentieList.size(); i++)
+                {
+                    deelcompStrings[i] = deelcompetentieList.get(i).getBeschrijving();
+                }
+                return deelcompStrings;         
+            default:
+                return null;
+        }
+    }
+    
+    private void editObject()
+    {
+        Object[] keuzeStrings = {"Competentie", "Deelcompetentie", "Indicator"};
+
+        String keuze = (String)JOptionPane.showInputDialog(this, "Wat wil u aanpassen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, keuzeStrings, null);
+        if(!keuze.equals(""))
+        {          
+            switch(keuze)
+            {
+                case "Competentie":
+                    editCompetentie();
+                    break;
+                case "Deelcompetentie":
+                    
+                    editDeelcompetentie();
+                    break;
+//                case "Indicator":
+//                    editIndicator(beschrijving);
+//                    break;
+            }
+            resetTree();
+        }
+    }
+    
+    private void editCompetentie()
+    {
+        try
+        {
+            competentieList = user.getCompetenties();
+            String keuze = (String)JOptionPane.showInputDialog(this, "Welke competentie wilt u aanpassen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, initKeuzeString("Competentie"), null);
+            if(keuze != null)
+            {
+                String beschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + keuze + "\n Nieuwe waarde: \n");
+                user.pasCompetentieAan(keuze, beschrijving);
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } 
+    }
+    
+    private void editDeelcompetentie()
+    {
+        try
+        {
+            deelcompetentieList = user.getDeelcompetenties();
+            String keuze = (String)JOptionPane.showInputDialog(this, "Welke deelcompetentie wilt u aanpassen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, initKeuzeString("Deelcompetentie"), null);
+            if(keuze != null)
+            {
+                String beschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + keuze + "\n Nieuwe waarde: \n");
+                user.pasDeelcompetentieAan(keuze, beschrijving);
+            }
+
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } 
+    }
+    
+//    private void editIndicator(String beschrijving)
+//    {
+//        try
+//        {
+//            user.pasIndicatorAan(beschrijving);
+//        }
+//        catch(SQLException e)
+//        {
+//            JOptionPane.showMessageDialog(this, e.getMessage());
+//        } 
+//    }
 }

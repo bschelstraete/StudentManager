@@ -28,7 +28,7 @@ public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
     public List<Deelcompetentie> getDeelcompetenties() throws SQLException {
         List<Deelcompetentie> deelcompetentieList = new ArrayList();
         st = conn.createStatement();
-        stringSQL = "SELECT * FROM competentie";
+        stringSQL = "SELECT * FROM deelcompetentie";
         ResultSet rs = st.executeQuery(stringSQL);
         while(rs.next())
         {
@@ -61,7 +61,7 @@ public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
     @Override
     public Deelcompetentie getDeelcompetentie(Integer ID) throws SQLException{
         st = conn.createStatement();
-        stringSQL = "SELECT * FROM competentie WHERE ID = " + ID;
+        stringSQL = "SELECT * FROM deelcompetentie WHERE ID = " + ID;
         ResultSet rs = st.executeQuery(stringSQL);
         String beschrijving = "";
         while(rs.next())
@@ -99,7 +99,7 @@ public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
         Integer ID = 0;
         while(rs.next())
         {
-            ID = rs.getInt("ID");
+           ID = rs.getInt("ID");
         }
         return new Deelcompetentie(ID, beschrijving);
     }

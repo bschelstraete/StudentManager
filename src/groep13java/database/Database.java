@@ -88,5 +88,29 @@ public class Database {
     {
         deelcompetentieImp.voegDeelcompetentieToe(beschrijving);
     }
+    
+    public void voegIndicatorToe(String beschrijving, Integer deelcompetentieID) throws SQLException
+    {
+        indicatorImp.voegIndicatortoe(beschrijving, deelcompetentieID);
+    }
 
+    public List<Deelcompetentie> getDeelcompetenties() throws SQLException
+    {
+        return deelcompetentieImp.getDeelcompetenties();
+    }
+
+    public void pasCompetentieAan(Competentie comp) throws SQLException
+    {
+       competentieImp.pasCompetentieAan(comp);
+    }
+    
+    public void pasDeelcompetentieAan(Deelcompetentie deelcomp) throws SQLException
+    {
+       deelcompetentieImp.pasDeelcompetentieAan(deelcomp);
+    }
+    
+//    public void pasIndicatorAan(Indicator indicator) throws SQLException
+//    {
+//       indicatorImp.pasIndicatorAan(indicator);
+//    }
 }

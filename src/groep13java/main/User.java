@@ -34,9 +34,9 @@ public class User extends Observable{
     {
         return control.getStudenten();
     }
-    public List<Competentie> getCompetenties() throws SQLException
+    public List<Competentie> getCompetentiesByOpleidingID(Integer opleidingID) throws SQLException
     {
-        return control.getCompetenties();
+        return control.getCompetentiesByOpleidingID(opleidingID);
     }
 
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
@@ -77,4 +77,32 @@ public class User extends Observable{
     {
         control.voegDeelcompetentieToe(beschrijving);
     }
+    
+    public void voegIndicatorToe(String beschrijving, String deelcompetentieBeschrijving) throws SQLException
+    {
+        Deelcompetentie deelcomp = getDeelcompetentieByBeschrijving(deelcompetentieBeschrijving);
+        control.voegIndicatorToe(beschrijving, deelcomp.getID());
+    }
+
+    public List<Deelcompetentie> getDeelcompetenties() throws SQLException
+    {
+        return control.getDeelcompetenties();
+    }
+
+    public void pasCompetentieAan(String oudeBeschrijving, String newBeschrijving) throws SQLException
+    {
+       Competentie comp = new Competentie(getCompetentieByBeschrijving(oudeBeschrijving).getID(), newBeschrijving);
+       control.pasCompetentieAan(comp);
+    }
+
+    public void pasDeelcompetentieAan(String oudeBeschrijving, String newBeschrijving) throws SQLException
+    {
+        Deelcompetentie deelcomp = new Deelcompetentie(getDeelcompetentieByBeschrijving(oudeBeschrijving).getID(), newBeschrijving);
+        control.pasDeelcompetentieAan(deelcomp);
+    }
+
+//    public void pasIndicatorAan(String beschrijving) throws SQLException
+//    {
+//        control.pasIndicatorAan(beschrijving);
+//    }
 }

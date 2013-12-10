@@ -72,5 +72,29 @@ public class Controller {
         db.voegDeelcompetentieToe(beschrijving);
     }
     
+    public void voegIndicatorToe(String beschrijving, Integer deelcompetentieID) throws SQLException
+    {
+        db.voegIndicatorToe(beschrijving, deelcompetentieID);
+    }
+
+    public List<Deelcompetentie> getDeelcompetenties() throws SQLException
+    {
+        return db.getDeelcompetenties();
+    }
+
+    public void pasCompetentieAan(Competentie comp) throws SQLException
+    {
+        db.pasCompetentieAan(comp);
+    }
+
+    public void pasDeelcompetentieAan(Deelcompetentie deelcomp) throws SQLException
+    {
+        db.pasDeelcompetentieAan(deelcomp);
+    }
+
+//    public void pasIndicatorAan(Indicator indicator) throws SQLException
+//    {
+//        db.pasIndicatorAan(indicator);
+//    }
     
 }

@@ -5,7 +5,6 @@
 package groep13java.DAO;
 
 import groep13java.Model.Indicator;
-import groep13java.Model.Indicator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +36,7 @@ public class IndicatorDAOImpl implements IndicatorDAO{
         while(rs.next())
         {
             Integer id = rs.getInt("ID");
-            String naam = rs.getString("naam");
+            String naam = rs.getString("beschrijving");
             Integer opleidingID = rs.getInt("deelcompID");
             Indicator bufIndicator = new Indicator(id, naam, opleidingID);
             moduleList.add(bufIndicator);
@@ -56,8 +55,8 @@ public class IndicatorDAOImpl implements IndicatorDAO{
         {
             Integer id = rs.getInt("ID");
             String beschrijving = rs.getString("beschrijving");
-            Indicator bufDeelcompetentie = new Indicator(id, beschrijving, deelcompID);
-            indicatorList.add(bufDeelcompetentie);
+            Indicator bufIndicator = new Indicator(id, beschrijving, deelcompID);
+            indicatorList.add(bufIndicator);
         }
         return indicatorList;
     }
@@ -67,9 +66,20 @@ public class IndicatorDAOImpl implements IndicatorDAO{
         st = conn.createStatement();
         stringSQL = "SELECT * FROM module WHERE ID = " + ID;
         ResultSet rs = st.executeQuery(stringSQL);
-        Indicator module = new Indicator(rs.getInt("ID"), rs.getString("naam"), rs.getInt("deelcompID"));
+        Indicator module = new Indicator(rs.getInt("ID"), rs.getString("beschrijving"), rs.getInt("deelcompID"));
         return module;
     }
     
+    @Override
+    public void voegIndicatortoe(String beschrijving, Integer deelcompetentieID) throws SQLException
+    {
+        stringSQL = "INSERT INTO indicator(beschrijving, deelcompID) VALUES('" + beschrijving + "', " + deelcompetentieID + ")";
+        prepSt = conn.prepareStatement(stringSQL);
+        prepSt.executeUpdate();    
+    }
 
+    public void pasIndicatorAan(String beschrijving) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
