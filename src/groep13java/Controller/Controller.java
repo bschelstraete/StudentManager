@@ -101,4 +101,39 @@ public class Controller {
     {
         return db.getIndicatorByBeschrijvingAndDeelcompetentieID(beschrijving, deelcompetentieID);
     }
+
+    public void verwijderCompetentie(Competentie competentie) throws SQLException
+    {
+        db.verwijderCompetentie(competentie);
+    }
+    
+    public void verwijderDeelcompetentie(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        db.verwijderDeelcompetentie(deelcompetentie);
+    }
+    
+    public void ontKoppelCompetentieMetDeelcompetentie(Competentie competentie) throws SQLException
+    {
+        db.ontKoppelCompetentieMetDeelcompetentie(competentie);
+    }
+    
+    public void ontKoppelDeelcompetentieMetCompetentie(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        db.ontKoppelDeelcompetentieMetCompetentie(deelcompetentie);
+    }
+    
+    public void verwijderIndicator(Indicator indicator) throws SQLException
+    {
+        db.verwijderIndicator(indicator);
+    }
+    
+    public void verwijderIndicatorByDeelcompetentieID(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        db.verwijderIndicatorByDeelcompetentieID(deelcompetentie);
+    }
+
+    public Indicator getIndicatorByBeschrijving(String beschrijving) throws SQLException
+    {
+        return db.getIndicatorByBeschrijving(beschrijving);
+    }
 }

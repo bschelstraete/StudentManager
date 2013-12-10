@@ -71,6 +71,13 @@ public class CompetentiePanel extends JPanel implements Observer{
             }
         });
         verwijderButton = new JButton("Verwijderen");
+        verwijderButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                verwijderObject();
+            }
+        });
         
         southButtonPanel.add(toevoegButton);
         southButtonPanel.add(aanpasButton);
@@ -335,7 +342,7 @@ public class CompetentiePanel extends JPanel implements Observer{
             if(keuze != null)
             {
                 String beschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + keuze + "\nNieuwe waarde: \n");
-                user.pasCompetentieAan(keuze, beschrijving);
+                if(beschrijving != null) user.pasCompetentieAan(keuze, beschrijving);
             }
         }
         catch(SQLException e)
@@ -352,7 +359,7 @@ public class CompetentiePanel extends JPanel implements Observer{
             if(keuze != null)
             {
                 String beschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + keuze + "\nNieuwe waarde: \n");
-                user.pasDeelcompetentieAan(keuze, beschrijving);
+                if(beschrijving != null) user.pasDeelcompetentieAan(keuze, beschrijving);
             }
 
         }
@@ -378,13 +385,105 @@ public class CompetentiePanel extends JPanel implements Observer{
                     indicatorString[i] = indicatorList.get(i).getBeschrijving();
                 }
                 String oudeBeschrijving = (String)JOptionPane.showInputDialog(this, "Welke indicator wilt u aanpassen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, indicatorString, null);
-                String newBeschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + oudeBeschrijving + "\nNieuwe waarde: \n");
-                user.pasIndicatorAan(oudeBeschrijving, newBeschrijving, keuze);
+                if(oudeBeschrijving != null)
+                {
+                    String newBeschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + oudeBeschrijving + "\nNieuwe waarde: \n");
+                    if(newBeschrijving != null) user.pasIndicatorAan(oudeBeschrijving, newBeschrijving, keuze);
+                }
             }
         }
         catch(SQLException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage());
         } 
+    }
+    
+    private void verwijderObject()
+    {
+        Object[] keuzeStrings = {"Competentie", "Deelcompetentie", "Indicator"};
+
+        String keuze = (String)JOptionPane.showInputDialog(this, "Wat wilt u verwijderen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, keuzeStrings, null);
+        if(!keuze.equals(""))
+        {          
+            switch(keuze)
+            {
+                case "Competentie":
+                    verwijderCompetentie();
+                    break;
+                case "Deelcompetentie":
+                    
+                    verwijderDeelcompetentie();
+                    break;
+                case "Indicator":
+                    verwijderIndicator();
+                    break;
+            }
+            resetTree();
+        }
+        
+    }
+    
+    private void verwijderCompetentie()
+    {
+        try
+        {
+            String keuze = (String)JOptionPane.showInputDialog(this, "Welke competentie wilt u verwijderen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, initKeuzeString("Competentie"), null);
+            if(keuze != null)
+            {
+                int resp = JOptionPane.showConfirmDialog(this, "Indien u deze competentie verwijdert zullen alle deelcompetenties, indicatoren en scores hieraan gelinked ook verwijderd worden, wilt u hiermee doorgaan?");
+                if (resp == JOptionPane.OK_OPTION) user.verwijderCompetentie(keuze);
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void verwijderDeelcompetentie()
+    {
+        try
+        {
+            String keuze = (String)JOptionPane.showInputDialog(this, "Welke deelcompetentie wilt u verwijderen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, initKeuzeString("Deelcompetentie"), null);
+            if(keuze != null)
+            {
+                int resp = JOptionPane.showConfirmDialog(this, "Indien u deze deelcompetentie verwijdert zullen alle indicatoren en scores hieraan gelinked ook verwijderd worden, wilt u hiermee doorgaan?");
+                if (resp == JOptionPane.OK_OPTION) user.verwijderCompetentie(keuze);                
+                user.verwijderDeelcompetentie(keuze);
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void verwijderIndicator()
+    {
+        try
+        {
+            String keuze = (String)JOptionPane.showInputDialog(this, "Van welke deelcompetentie wilt u een indicator verwijderen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, initKeuzeString("Deelcompetentie"), null);
+            if(keuze != null)
+            {             
+                indicatorList = user.getIndicatorsByDeelcompetentieID(user.getDeelcompetentieByBeschrijving(keuze).getID());
+
+                String[] indicatorString = new String[indicatorList.size()];
+
+                for(int i = 0; i < indicatorList.size(); i++)
+                {
+                    indicatorString[i] = indicatorList.get(i).getBeschrijving();
+                }
+                String indicator = (String)JOptionPane.showInputDialog(this, "Welke indicator wilt u verwijderen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, indicatorString, null);
+                if(indicator != null) 
+                {
+                    int resp = JOptionPane.showConfirmDialog(this, "Indien u deze indicator verwijdert zullen alle scores hieraan gelinked ook verwijderd worden, wilt u hiermee doorgaan?");
+                    if (resp == JOptionPane.OK_OPTION) user.verwijderIndicatorByBeschrijving(indicator);
+                }
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }
 }

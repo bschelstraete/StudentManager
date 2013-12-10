@@ -115,5 +115,60 @@ public class User extends Observable{
        return control.getIndicatorByBeschrijvingAndDeelcompetentieID(beschrijving, deelcompetentieID);
     }
 
-
+    public void verwijderCompetentie(String beschrijving) throws SQLException
+    {
+        Competentie comp = getCompetentieByBeschrijving(beschrijving);
+        List<Deelcompetentie> deelcompetentieList = getDeelcompetentiesByCompetentieID(comp.getID());
+        ontkoppelCompetentieMetDeelcompetenties(comp);
+        for (int i = 0; i < deelcompetentieList.size(); i++)
+        {
+            verwijderIndicatorByDeelcompetentieID(deelcompetentieList.get(i));
+            control.verwijderDeelcompetentie(deelcompetentieList.get(i));
+        }
+        
+        control.verwijderCompetentie(comp);
+    }
+    
+    public void verwijderDeelcompetentie(String beschrijving) throws SQLException
+    {
+        Deelcompetentie deelcomp = getDeelcompetentieByBeschrijving(beschrijving);
+        List<Indicator> indicatorList = getIndicatorsByDeelcompetentieID(deelcomp.getID());
+        for(int i = 0; i < indicatorList.size(); i++)
+        {
+            verwijderIndicator(indicatorList.get(i));
+        }
+        control.ontKoppelDeelcompetentieMetCompetentie(deelcomp);
+        control.verwijderDeelcompetentie(deelcomp);
+    }
+    
+    private void ontkoppelCompetentieMetDeelcompetenties(Competentie competentie) throws SQLException
+    {
+        control.ontKoppelCompetentieMetDeelcompetentie(competentie);
+    }
+    
+    private void ontkoppelDeelcompetentieMetCompetentie(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        control.ontKoppelDeelcompetentieMetCompetentie(deelcompetentie);
+    }
+    
+    private void verwijderIndicator(Indicator indicator) throws SQLException
+    {
+        control.verwijderIndicator(indicator);
+    }
+    
+    public void verwijderIndicatorByBeschrijving(String beschrijving) throws SQLException
+    {
+        Indicator indicator = getIndicatorByBeschrijving(beschrijving);
+        control.verwijderIndicator(indicator);
+    }
+    
+    public Indicator getIndicatorByBeschrijving(String beschrijving) throws SQLException
+    {
+        return control.getIndicatorByBeschrijving(beschrijving);
+    }
+    
+    public void verwijderIndicatorByDeelcompetentieID(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        control.verwijderIndicatorByDeelcompetentieID(deelcompetentie);
+    }
 }

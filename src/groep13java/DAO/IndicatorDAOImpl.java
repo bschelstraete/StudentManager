@@ -4,6 +4,7 @@
  */
 package groep13java.DAO;
 
+import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -89,6 +90,36 @@ public class IndicatorDAOImpl implements IndicatorDAO{
     {
         st = conn.createStatement();
         stringSQL = "SELECT * FROM indicator WHERE beschrijving = '" + beschrijving + "' AND deelcompID = " + deelcompetentieID;
+        ResultSet rs = st.executeQuery(stringSQL);
+        Integer ID = 0;
+        String indBeschrijving = "";
+        Integer deelcompID = 0;
+        
+        while(rs.next())
+        {
+            ID = rs.getInt("ID");
+            indBeschrijving = rs.getString("beschrijving");
+            deelcompID = rs.getInt("deelcompID");
+        }
+        return new Indicator(ID, indBeschrijving, deelcompID);
+    }
+
+    @Override
+    public void verwijderIndicator(Indicator indicator) throws SQLException {
+        prepSt = conn.prepareStatement("DELETE FROM indicator WHERE ID = " + indicator.getID());
+        prepSt.executeUpdate();
+    }
+
+    @Override
+    public void verwijderIndicatorByDeelcompetentieID(Deelcompetentie deelcompetentie) throws SQLException {
+        prepSt = conn.prepareStatement("DELETE FROM indicator WHERE deelcompID = " + deelcompetentie.getID());
+        prepSt.executeUpdate();
+    }
+
+    public Indicator getIndicatorByBeschrijving(String beschrijving) throws SQLException
+    {
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM indicator WHERE beschrijving = '" + beschrijving + "'";
         ResultSet rs = st.executeQuery(stringSQL);
         Integer ID = 0;
         String indBeschrijving = "";

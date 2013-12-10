@@ -4,6 +4,8 @@
  */
 package groep13java.DAO;
 
+import groep13java.Model.Competentie;
+import groep13java.Model.Deelcompetentie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -24,6 +26,20 @@ public class CompetentieOnDeelcompetentieDAOImpl implements CompetentieOnDeelcom
     public void koppelDeelCompetentieAanCompetentie(Integer compID, Integer deelcompID) throws SQLException {
         prepSt = conn.prepareStatement("INSERT INTO competentie_deelcompetentie(compID, deelcompID) VALUES(" + compID + ", " + deelcompID + ")");
         prepSt.executeUpdate();
+    }
+    
+    @Override
+    public void ontKoppelCompetentieMetDeelcompetentie(Competentie competentie) throws SQLException
+    {
+        prepSt = conn.prepareStatement("DELETE FROM competentie_deelcompetentie WHERE compID = " + competentie.getID());
+        prepSt.executeUpdate();
+    }
+    
+    @Override
+    public void ontKoppelDeelcompetentieMetCompetentie(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        prepSt = conn.prepareStatement("DELETE FROM competentie_deelcompetentie WHERE deelcompID = " + deelcompetentie.getID());
+        prepSt.executeUpdate();    
     }
     
 }

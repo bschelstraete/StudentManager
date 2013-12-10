@@ -118,4 +118,39 @@ public class Database {
     {
        return indicatorImp.getIndicatorByBeschrijvingAndDeelcompetentieID(beschrijving, deelcompetentieID);
     }
+    
+    public void ontKoppelCompetentieMetDeelcompetentie(Competentie competentie) throws SQLException
+    {
+        competentieOnDeelcompetentieImpl.ontKoppelCompetentieMetDeelcompetentie(competentie);
+    }
+    
+    public void ontKoppelDeelcompetentieMetCompetentie(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        competentieOnDeelcompetentieImpl.ontKoppelDeelcompetentieMetCompetentie(deelcompetentie);
+    }
+    
+    public void verwijderCompetentie(Competentie competentie) throws SQLException
+    {
+        competentieImp.verwijderCompetentie(competentie);
+    }
+    
+    public void verwijderDeelcompetentie(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        deelcompetentieImp.verwijderDeelcompetentie(deelcompetentie);
+    }
+    
+    public void verwijderIndicator(Indicator indicator) throws SQLException
+    {
+        indicatorImp.verwijderIndicator(indicator);
+    }
+    
+    public void verwijderIndicatorByDeelcompetentieID(Deelcompetentie deelcompetentie) throws SQLException
+    {
+        indicatorImp.verwijderIndicatorByDeelcompetentieID(deelcompetentie);
+    }
+
+    public Indicator getIndicatorByBeschrijving(String beschrijving) throws SQLException
+    {
+        return indicatorImp.getIndicatorByBeschrijving(beschrijving);
+    }
 }
