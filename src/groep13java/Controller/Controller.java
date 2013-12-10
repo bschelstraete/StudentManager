@@ -92,9 +92,13 @@ public class Controller {
         db.pasDeelcompetentieAan(deelcomp);
     }
 
-//    public void pasIndicatorAan(Indicator indicator) throws SQLException
-//    {
-//        db.pasIndicatorAan(indicator);
-//    }
-    
+    public void pasIndicatorAan(Indicator indicator) throws SQLException
+    {
+        db.pasIndicatorAan(indicator);
+    }
+
+    public Indicator getIndicatorByBeschrijvingAndDeelcompetentieID(String beschrijving, Integer deelcompetentieID) throws SQLException
+    {
+        return db.getIndicatorByBeschrijvingAndDeelcompetentieID(beschrijving, deelcompetentieID);
+    }
 }

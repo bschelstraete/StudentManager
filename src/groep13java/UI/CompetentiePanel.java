@@ -133,7 +133,7 @@ public class CompetentiePanel extends JPanel implements Observer{
         vulIndicatorLijstIn(deelcompetentieID);
         for (int i = 0; i < indicatorList.size(); i++)
         {
-            indicatorNode = new DefaultMutableTreeNode(indicatorList.get(i).getNaam());
+            indicatorNode = new DefaultMutableTreeNode(indicatorList.get(i).getBeschrijving());
             deelcompetentieNode.add(indicatorNode);
         }
     }
@@ -318,9 +318,9 @@ public class CompetentiePanel extends JPanel implements Observer{
                     
                     editDeelcompetentie();
                     break;
-//                case "Indicator":
-//                    editIndicator(beschrijving);
-//                    break;
+                case "Indicator":
+                    editIndicator();
+                    break;
             }
             resetTree();
         }
@@ -334,7 +334,7 @@ public class CompetentiePanel extends JPanel implements Observer{
             String keuze = (String)JOptionPane.showInputDialog(this, "Welke competentie wilt u aanpassen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, initKeuzeString("Competentie"), null);
             if(keuze != null)
             {
-                String beschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + keuze + "\n Nieuwe waarde: \n");
+                String beschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + keuze + "\nNieuwe waarde: \n");
                 user.pasCompetentieAan(keuze, beschrijving);
             }
         }
@@ -348,11 +348,10 @@ public class CompetentiePanel extends JPanel implements Observer{
     {
         try
         {
-            deelcompetentieList = user.getDeelcompetenties();
             String keuze = (String)JOptionPane.showInputDialog(this, "Welke deelcompetentie wilt u aanpassen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, initKeuzeString("Deelcompetentie"), null);
             if(keuze != null)
             {
-                String beschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + keuze + "\n Nieuwe waarde: \n");
+                String beschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + keuze + "\nNieuwe waarde: \n");
                 user.pasDeelcompetentieAan(keuze, beschrijving);
             }
 
@@ -363,15 +362,29 @@ public class CompetentiePanel extends JPanel implements Observer{
         } 
     }
     
-//    private void editIndicator(String beschrijving)
-//    {
-//        try
-//        {
-//            user.pasIndicatorAan(beschrijving);
-//        }
-//        catch(SQLException e)
-//        {
-//            JOptionPane.showMessageDialog(this, e.getMessage());
-//        } 
-//    }
+    private void editIndicator()
+    {
+        try
+        {
+            String keuze = (String)JOptionPane.showInputDialog(this, "Van welke deelcompetentie wilt u de indicator aanpassen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, initKeuzeString("Deelcompetentie"), null);
+            if(keuze != null)
+            {
+                indicatorList = user.getIndicatorsByDeelcompetentieID(user.getDeelcompetentieByBeschrijving(keuze).getID());
+                
+                String[] indicatorString = new String[indicatorList.size()];
+                
+                for(int i = 0; i < indicatorList.size(); i++)
+                {
+                    indicatorString[i] = indicatorList.get(i).getBeschrijving();
+                }
+                String oudeBeschrijving = (String)JOptionPane.showInputDialog(this, "Welke indicator wilt u aanpassen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, indicatorString, null);
+                String newBeschrijving = JOptionPane.showInputDialog(null, "Oude waarde: \n" + oudeBeschrijving + "\nNieuwe waarde: \n");
+                user.pasIndicatorAan(oudeBeschrijving, newBeschrijving, keuze);
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } 
+    }
 }

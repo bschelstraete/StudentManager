@@ -18,7 +18,7 @@ public class Indicator {
         return id;
     }
     
-    public String getNaam()
+    public String getBeschrijving()
     {
         return naam;
     }

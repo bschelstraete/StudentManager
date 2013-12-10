@@ -109,8 +109,13 @@ public class Database {
        deelcompetentieImp.pasDeelcompetentieAan(deelcomp);
     }
     
-//    public void pasIndicatorAan(Indicator indicator) throws SQLException
-//    {
-//       indicatorImp.pasIndicatorAan(indicator);
-//    }
+    public void pasIndicatorAan(Indicator indicator) throws SQLException
+    {
+       indicatorImp.pasIndicatorAan(indicator);
+    }
+
+    public Indicator getIndicatorByBeschrijvingAndDeelcompetentieID(String beschrijving, Integer deelcompetentieID) throws SQLException
+    {
+       return indicatorImp.getIndicatorByBeschrijvingAndDeelcompetentieID(beschrijving, deelcompetentieID);
+    }
 }

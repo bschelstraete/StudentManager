@@ -29,9 +29,9 @@ public class IndicatorDAOImpl implements IndicatorDAO{
     @Override
     public List<Indicator> getIndicators() throws SQLException
     {
-        List<Indicator> moduleList = new ArrayList();
+        List<Indicator> indicatorList = new ArrayList();
         st = conn.createStatement();
-        stringSQL = "SELECT * FROM module";
+        stringSQL = "SELECT * FROM indicator";
         ResultSet rs = st.executeQuery(stringSQL);
         while(rs.next())
         {
@@ -39,9 +39,9 @@ public class IndicatorDAOImpl implements IndicatorDAO{
             String naam = rs.getString("beschrijving");
             Integer opleidingID = rs.getInt("deelcompID");
             Indicator bufIndicator = new Indicator(id, naam, opleidingID);
-            moduleList.add(bufIndicator);
+            indicatorList.add(bufIndicator);
         }
-        return moduleList;
+        return indicatorList;
     }
     
     @Override
@@ -64,10 +64,10 @@ public class IndicatorDAOImpl implements IndicatorDAO{
     @Override
     public Indicator getIndicator(Integer ID) throws SQLException {
         st = conn.createStatement();
-        stringSQL = "SELECT * FROM module WHERE ID = " + ID;
+        stringSQL = "SELECT * FROM indicator WHERE ID = " + ID;
         ResultSet rs = st.executeQuery(stringSQL);
-        Indicator module = new Indicator(rs.getInt("ID"), rs.getString("beschrijving"), rs.getInt("deelcompID"));
-        return module;
+        Indicator indicator = new Indicator(rs.getInt("ID"), rs.getString("beschrijving"), rs.getInt("deelcompID"));
+        return indicator;
     }
     
     @Override
@@ -78,8 +78,28 @@ public class IndicatorDAOImpl implements IndicatorDAO{
         prepSt.executeUpdate();    
     }
 
-    public void pasIndicatorAan(String beschrijving) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void pasIndicatorAan(Indicator indicator) throws SQLException
+    {
+        prepSt = conn.prepareStatement("UPDATE indicator SET beschrijving = '" + indicator.getBeschrijving()
+         + "' WHERE ID = " + indicator.getID());
+        prepSt.executeUpdate();
+    }    
+
+    public Indicator getIndicatorByBeschrijvingAndDeelcompetentieID(String beschrijving, Integer deelcompetentieID) throws SQLException
+    {
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM indicator WHERE beschrijving = '" + beschrijving + "' AND deelcompID = " + deelcompetentieID;
+        ResultSet rs = st.executeQuery(stringSQL);
+        Integer ID = 0;
+        String indBeschrijving = "";
+        Integer deelcompID = 0;
+        
+        while(rs.next())
+        {
+            ID = rs.getInt("ID");
+            indBeschrijving = rs.getString("beschrijving");
+            deelcompID = rs.getInt("deelcompID");
+        }
+        return new Indicator(ID, indBeschrijving, deelcompID);
     }
-    
 }

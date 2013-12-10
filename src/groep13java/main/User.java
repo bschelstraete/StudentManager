@@ -34,9 +34,9 @@ public class User extends Observable{
     {
         return control.getStudenten();
     }
-    public List<Competentie> getCompetentiesByOpleidingID(Integer opleidingID) throws SQLException
+    public List<Competentie> getCompetenties() throws SQLException
     {
-        return control.getCompetentiesByOpleidingID(opleidingID);
+        return control.getCompetenties();
     }
 
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
@@ -63,12 +63,12 @@ public class User extends Observable{
         control.koppelDeelcompetentieAanCompetentie(comp.getID(), deelcomp.getID());
     }
 
-    private Competentie getCompetentieByBeschrijving(String compBeschrijving) throws SQLException
+    public Competentie getCompetentieByBeschrijving(String compBeschrijving) throws SQLException
     {
         return control.getCompetentieByBeschrijving(compBeschrijving);
     }
 
-    private Deelcompetentie getDeelcompetentieByBeschrijving(String deelcompBeschrijving) throws SQLException
+    public Deelcompetentie getDeelcompetentieByBeschrijving(String deelcompBeschrijving) throws SQLException
     {
         return control.getDeelcompetentieByBeschrijving(deelcompBeschrijving);
     }
@@ -100,9 +100,20 @@ public class User extends Observable{
         Deelcompetentie deelcomp = new Deelcompetentie(getDeelcompetentieByBeschrijving(oudeBeschrijving).getID(), newBeschrijving);
         control.pasDeelcompetentieAan(deelcomp);
     }
+    
+    
+    public void pasIndicatorAan(String oudeBeschrijving, String newBeschrijving, String deelcompetentieBeschrijving) throws SQLException
+    {
+        Deelcompetentie deelcomp = getDeelcompetentieByBeschrijving(deelcompetentieBeschrijving);
+        Indicator oudeIndicator = getIndicatorsByBeschrijvingAndDeelcompetentieID(oudeBeschrijving, deelcomp.getID());
+        Indicator indicator = new Indicator(oudeIndicator.getID(), newBeschrijving, oudeIndicator.getDeelcompID());
+        control.pasIndicatorAan(indicator);
+    }
 
-//    public void pasIndicatorAan(String beschrijving) throws SQLException
-//    {
-//        control.pasIndicatorAan(beschrijving);
-//    }
+    private Indicator getIndicatorsByBeschrijvingAndDeelcompetentieID(String beschrijving, Integer deelcompetentieID) throws SQLException
+    {
+       return control.getIndicatorByBeschrijvingAndDeelcompetentieID(beschrijving, deelcompetentieID);
+    }
+
+
 }
