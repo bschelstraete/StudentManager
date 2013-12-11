@@ -7,6 +7,7 @@ package groep13java.Controller;
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
+import groep13java.Model.Partim;
 import groep13java.Model.Student;
 import groep13java.database.Database;
 import java.sql.SQLException;
@@ -37,6 +38,27 @@ public class Controller {
     public List<Competentie> getCompetenties() throws SQLException{
         return db.getCompetenties();
     }
+    
+    public List<Deelcompetentie> getDeelcompetenties() throws SQLException
+    {
+        return db.getDeelcompetenties();
+    }
+    
+    public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
+    {
+        return db.getDeelcompetentiesByCompetentieID(competentieID);
+    }
+    
+    public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException
+    {
+        return db.getIndicatorsByDeelcompetentieID(deelcompID);
+    }
+    
+    public List<Partim> getPartims() throws SQLException
+    {
+        return db.getPartims();
+    }
+    
     public Competentie getCompetentieByBeschrijving(String beschrijving) throws SQLException
     {
         return db.getCompetentieByBeschrijving(beschrijving);
@@ -47,19 +69,9 @@ public class Controller {
         db.voegCompetentieToe(newCompetentie);
     }
     
-    public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
-    {
-        return db.getDeelcompetentiesByCompetentieID(competentieID);
-    }
-    
     public Deelcompetentie getDeelcompetentieByBeschrijving(String beschrijving) throws SQLException
     {
         return db.getDeelcompetentieByBeschrijving(beschrijving);
-    }
-    
-    public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException
-    {
-        return db.getIndicatorsByDeelcompetentieID(deelcompID);
     }
     
     public void koppelDeelcompetentieAanCompetentie(Integer compID, Integer deelcompID) throws SQLException
@@ -75,11 +87,6 @@ public class Controller {
     public void voegIndicatorToe(String beschrijving, Integer deelcompetentieID) throws SQLException
     {
         db.voegIndicatorToe(beschrijving, deelcompetentieID);
-    }
-
-    public List<Deelcompetentie> getDeelcompetenties() throws SQLException
-    {
-        return db.getDeelcompetenties();
     }
 
     public void pasCompetentieAan(Competentie comp) throws SQLException
@@ -135,5 +142,35 @@ public class Controller {
     public Indicator getIndicatorByBeschrijving(String beschrijving) throws SQLException
     {
         return db.getIndicatorByBeschrijving(beschrijving);
+    }
+    
+    public Integer getPartimIDByIndicatorID(Integer indicatorID) throws SQLException
+    {
+        return db.getPartimIDByIndicatorID(indicatorID);
+    }
+    
+    public List<Integer> getIndicatorenIDByPartimID(Integer partimID) throws SQLException
+    {
+        return db.getIndicatorenByPartimID(partimID);
+    }
+    
+    public void koppelIndicatorMetPartim(Integer indicatorID, Integer partimID) throws SQLException
+    {
+        db.koppelIndicatorMetPartim(indicatorID, partimID);
+    }
+    
+    public void ontkoppelIndicatorMetPartimByIndicatorID(Integer indicatorID) throws SQLException
+    {
+        db.ontkoppelIndicatorMetPartimByIndicatorID(indicatorID);
+    }
+    
+    public void ontkoppelPartimMetIndicatorenByPartimID(Integer partimID) throws SQLException
+    {
+        db.ontkoppelPartimMetIndicatorenByPartimID(partimID);
+    }
+
+    public Indicator getIndicatorByID(Integer indicatorID) throws SQLException
+    {
+        return db.getIndicatorByID(indicatorID);
     }
 }

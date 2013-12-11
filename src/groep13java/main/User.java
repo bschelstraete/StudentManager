@@ -8,6 +8,7 @@ import groep13java.Controller.Controller;
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
+import groep13java.Model.Partim;
 import groep13java.Model.Student;
 import groep13java.Observer.Observer;
 import java.sql.SQLException;
@@ -47,6 +48,16 @@ public class User extends Observable{
     public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompetentieID) throws SQLException
     {
         return control.getIndicatorsByDeelcompetentieID(deelcompetentieID);
+    }
+    
+    public List<Partim> getPartims() throws SQLException
+    {
+        return control.getPartims();
+    }
+    
+    public Indicator getIndicatorByID(Integer indicatorID) throws SQLException
+    {
+        return control.getIndicatorByID(indicatorID);
     }
     
     public void voegCompetentieToe(String newCompetentie) throws SQLException
@@ -170,5 +181,38 @@ public class User extends Observable{
     public void verwijderIndicatorByDeelcompetentieID(Deelcompetentie deelcompetentie) throws SQLException
     {
         control.verwijderIndicatorByDeelcompetentieID(deelcompetentie);
+    }
+    
+    public List<Indicator> getIndicatorenIDByPartimID(Integer partimID) throws SQLException
+    {
+        List<Integer> indicatorenIDList = control.getIndicatorenIDByPartimID(partimID);
+        List<Indicator> indicatorList = new ArrayList<>();
+        
+        for(int i = 0; i < indicatorenIDList.size(); i++)
+        {
+            indicatorList.add(getIndicatorByID(indicatorenIDList.get(i)));
+        }
+        
+        return indicatorList;
+    }
+    
+    public Integer getPartimIDByIndicatorID(Integer indicatorID) throws SQLException
+    {
+        return control.getPartimIDByIndicatorID(indicatorID);
+    }
+    
+    public void koppelIndicatorMetPartim(Integer indicatorID, Integer partimID) throws SQLException
+    {
+        control.koppelIndicatorMetPartim(indicatorID, partimID);
+    }
+    
+    public void ontkoppelIndicatorMetPartimByIndicatorID(Integer indicatorID) throws SQLException
+    {
+        control.ontkoppelIndicatorMetPartimByIndicatorID(indicatorID);
+    }
+    
+    public void ontkoppelPartimMetIndicatorenByPartimID(Integer partimID) throws SQLException
+    {
+        control.ontkoppelPartimMetIndicatorenByPartimID(partimID);
     }
 }

@@ -8,6 +8,7 @@ import groep13java.DAO.*;
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
+import groep13java.Model.Partim;
 import groep13java.Model.Student;
 import java.sql.Connection;
 import java.util.List;
@@ -26,7 +27,9 @@ public class Database {
     private final PartimDAOImpl partimImp;
     private final StudentDAOImpl studentImp; 
     private final IndicatorDAOImpl indicatorImp;
-    private final CompetentieOnDeelcompetentieDAOImpl competentieOnDeelcompetentieImpl;
+    private final CompetentieOnDeelcompetentieDAOImpl competentieOnDeelcompetentieImp;
+    private final IndicatorOnPartimDAOImpl indicatorOnPartimImp;
+            
     public Database()
     {
         conn = DAO.getInstance().getConnection();
@@ -37,7 +40,8 @@ public class Database {
         partimImp = new PartimDAOImpl();
         studentImp = new StudentDAOImpl();
         indicatorImp = new IndicatorDAOImpl();
-        competentieOnDeelcompetentieImpl = new CompetentieOnDeelcompetentieDAOImpl();
+        competentieOnDeelcompetentieImp = new CompetentieOnDeelcompetentieDAOImpl();
+        indicatorOnPartimImp = new IndicatorOnPartimDAOImpl();
     }
     
     public List<Student> getStudenten() throws SQLException
@@ -54,16 +58,6 @@ public class Database {
        return competentieImp.getCompetenties();
     }
     
-    public Competentie getCompetentieByBeschrijving(String beschrijving) throws SQLException
-    {
-          return competentieImp.getCompetentieByBeschrijving(beschrijving);
-    }
-    
-    public void voegCompetentieToe(String newCompetentie) throws SQLException
-    {
-        competentieImp.voegCompetentieToe(newCompetentie);
-    }
-    
     public List<Deelcompetentie> getDeelcompetentiesByCompetentieID(Integer competentieID) throws SQLException
     {
         return deelcompetentieImp.getDeelcompetentiesByCompetentieID(competentieID);
@@ -74,9 +68,24 @@ public class Database {
         return indicatorImp.getIndicatorsByDeelcompetentieID(deelcompID);
     }
     
+    public List<Partim> getPartims() throws SQLException
+    {
+        return partimImp.getPartims();
+    }
+    
+    public Competentie getCompetentieByBeschrijving(String beschrijving) throws SQLException
+    {
+          return competentieImp.getCompetentieByBeschrijving(beschrijving);
+    }
+    
+    public void voegCompetentieToe(String newCompetentie) throws SQLException
+    {
+        competentieImp.voegCompetentieToe(newCompetentie);
+    }
+    
     public void koppelDeelcompetentieAanCompetentie(Integer compID, Integer deelcompID) throws SQLException
     {
-        competentieOnDeelcompetentieImpl.koppelDeelCompetentieAanCompetentie(compID, deelcompID);
+        competentieOnDeelcompetentieImp.koppelDeelCompetentieAanCompetentie(compID, deelcompID);
     }
 
     public Deelcompetentie getDeelcompetentieByBeschrijving(String beschrijving) throws SQLException
@@ -121,12 +130,12 @@ public class Database {
     
     public void ontKoppelCompetentieMetDeelcompetentie(Competentie competentie) throws SQLException
     {
-        competentieOnDeelcompetentieImpl.ontKoppelCompetentieMetDeelcompetentie(competentie);
+        competentieOnDeelcompetentieImp.ontKoppelCompetentieMetDeelcompetentie(competentie);
     }
     
     public void ontKoppelDeelcompetentieMetCompetentie(Deelcompetentie deelcompetentie) throws SQLException
     {
-        competentieOnDeelcompetentieImpl.ontKoppelDeelcompetentieMetCompetentie(deelcompetentie);
+        competentieOnDeelcompetentieImp.ontKoppelDeelcompetentieMetCompetentie(deelcompetentie);
     }
     
     public void verwijderCompetentie(Competentie competentie) throws SQLException
@@ -152,5 +161,35 @@ public class Database {
     public Indicator getIndicatorByBeschrijving(String beschrijving) throws SQLException
     {
         return indicatorImp.getIndicatorByBeschrijving(beschrijving);
+    }
+    
+    public List<Integer> getIndicatorenByPartimID(Integer partimID) throws SQLException
+    {
+        return indicatorOnPartimImp.getIndicatorenByPartimID(partimID);
+    }
+    
+    public Integer getPartimIDByIndicatorID(Integer indicatorID) throws SQLException
+    {
+        return indicatorOnPartimImp.getPartimIDByIndicatorID(indicatorID);
+    }
+    
+    public void koppelIndicatorMetPartim(Integer indicatorID, Integer partimID) throws SQLException
+    {
+        indicatorOnPartimImp.koppelIndicatorMetPartim(indicatorID, partimID);
+    }
+    
+    public void ontkoppelIndicatorMetPartimByIndicatorID(Integer indicatorID) throws SQLException
+    {
+        indicatorOnPartimImp.ontkoppelIndicatorMetPartimByIndicatorID(indicatorID);
+    }
+    
+    public void ontkoppelPartimMetIndicatorenByPartimID(Integer partimID) throws SQLException
+    {
+        indicatorOnPartimImp.ontkoppelPartimMetIndicatorenByPartimID(partimID);
+    }
+
+    public Indicator getIndicatorByID(Integer indicatorID) throws SQLException
+    {
+       return indicatorImp.getIndicator(indicatorID);
     }
 }

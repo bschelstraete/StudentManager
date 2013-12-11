@@ -64,10 +64,14 @@ public class IndicatorDAOImpl implements IndicatorDAO{
     
     @Override
     public Indicator getIndicator(Integer ID) throws SQLException {
+        Indicator indicator = null;
         st = conn.createStatement();
         stringSQL = "SELECT * FROM indicator WHERE ID = " + ID;
         ResultSet rs = st.executeQuery(stringSQL);
-        Indicator indicator = new Indicator(rs.getInt("ID"), rs.getString("beschrijving"), rs.getInt("deelcompID"));
+        while(rs.next())
+        {
+            indicator = new Indicator(rs.getInt("ID"), rs.getString("beschrijving"), rs.getInt("deelcompID"));
+        }
         return indicator;
     }
     
