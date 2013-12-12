@@ -4,6 +4,7 @@
  */
 package groep13java.DAO;
 
+import groep13java.Model.Indicator;
 import groep13java.Model.Partim;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,5 +49,21 @@ public class PartimDAOImpl implements PartimDAO{
         ResultSet rs = st.executeQuery(stringSQL);
         Partim partim = new Partim(rs.getInt("ID"), rs.getString("naam"), rs.getInt("modID"));
         return partim;
+    }
+
+    public Partim getPartimByBeschrijving(String beschrijving) throws SQLException
+    {
+       st = conn.createStatement();
+       stringSQL = "SELECt * FROM partim WHERE beschrijving = '" + beschrijving + "'";
+       ResultSet rs = st.executeQuery(stringSQL);
+       Integer ID = 0;
+       Integer modID = 0;
+       while(rs.next())
+       {
+           ID = rs.getInt("ID");
+           modID = rs.getInt("modID");
+       }
+       
+       return new Partim(ID, beschrijving, modID);
     }
 }

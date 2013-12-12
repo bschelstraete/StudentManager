@@ -63,6 +63,11 @@ public class Database {
         return deelcompetentieImp.getDeelcompetentiesByCompetentieID(competentieID);
     }
     
+    public List<Indicator> getIndicatoren() throws SQLException
+    {
+        return indicatorImp.getIndicatoren();
+    }
+    
     public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException
     {
         return indicatorImp.getIndicatorsByDeelcompetentieID(deelcompID);
@@ -191,5 +196,10 @@ public class Database {
     public Indicator getIndicatorByID(Integer indicatorID) throws SQLException
     {
        return indicatorImp.getIndicator(indicatorID);
+    }
+
+    public Partim getPartimByBeschrijving(String beschrijving) throws SQLException
+    {
+        return partimImp.getPartimByBeschrijving(beschrijving);
     }
 }

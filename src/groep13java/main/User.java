@@ -216,17 +216,22 @@ public class User extends Observable{
         control.ontkoppelPartimMetIndicatorenByPartimID(partimID);
     }
     
-    private List<Indicator> getIndicatoren()
+    private List<Indicator> getIndicatoren() throws SQLException
     {
         return control.getIndicatoren();
+    }
+    
+    public Partim getPartimByBeschrijving(String beschrijving) throws SQLException
+    {
+        return control.getPartimByBeschrijving(beschrijving);
     }
     
     public List<Indicator> getNogNietGekoppeldeIndicatoren() throws SQLException
     {
         List<Indicator> nietGekoppeldeIndicatorList = new ArrayList<>();
-        List<Indicator> alleIndicatoren = new ArrayList<>();
+        List<Indicator> alleIndicatoren = getIndicatoren();
         List<Indicator> gekoppeldeIndicatorList = new ArrayList<>();
-        List<Indicator> indicatorByPartimList = new ArrayList<>();
+        List<Indicator> indicatorByPartimList;
         List<Partim> partimList = getPartims();
         
         for(int i = 0; i < partimList.size(); i++)
@@ -237,5 +242,18 @@ public class User extends Observable{
                 gekoppeldeIndicatorList.add(indicatorByPartimList.get(j));
             }
         }
+        
+        for(int k = 0; k < alleIndicatoren.size(); k++)
+        {
+            for(int l = 0; l < gekoppeldeIndicatorList.size(); l++)
+            {
+                if(alleIndicatoren.get(k) != gekoppeldeIndicatorList.get(l))
+                {
+                    nietGekoppeldeIndicatorList.add(alleIndicatoren.get(k));
+                }
+            } 
+        }
+        
+        return nietGekoppeldeIndicatorList;
     }
 }

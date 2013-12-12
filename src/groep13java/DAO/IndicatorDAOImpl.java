@@ -28,7 +28,7 @@ public class IndicatorDAOImpl implements IndicatorDAO{
     private PreparedStatement prepSt;
     
     @Override
-    public List<Indicator> getIndicators() throws SQLException
+    public List<Indicator> getIndicatoren() throws SQLException
     {
         List<Indicator> indicatorList = new ArrayList();
         st = conn.createStatement();

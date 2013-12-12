@@ -4,6 +4,7 @@
  */
 package groep13java.UI;
 
+import groep13java.Model.Indicator;
 import groep13java.Model.Partim;
 import groep13java.Model.Student;
 import groep13java.main.User;
@@ -78,37 +79,5 @@ public class StudentListPanel extends JPanel{
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         return new JTable(studentObject, columnNames);
-    }
-    
-    private void koppelIndicatorMetPartim()
-    {
-        try
-        {
-            String partimKeuze = (String)JOptionPane.showInputDialog(this, "Welke partim wilt u koppelen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getPartimStringList(), null);
-            String indicatorKeuze = (String)JOptionPane.showInputDialog();
-            
-        }
-        catch(SQLException e)
-        {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }
-    
-    private String[] getPartimStringList() throws SQLException
-    {
-        List<Partim> partimList = user.getPartims();
-        String[] partimStringList = new String[partimList.size()];
-
-        for(int i = 0; i < partimList.size(); i++)
-        {
-            partimStringList[i] = partimList.get(i).getNaam();
-        }
-
-        return partimStringList;
-    }
-    
-    private String[] getIndicatorStringList() throws SQLException
-    {
-        List<Indicator> indicatorList = user.
     }
 }

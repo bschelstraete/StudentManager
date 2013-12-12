@@ -48,6 +48,10 @@ public class Controller {
     {
         return db.getDeelcompetentiesByCompetentieID(competentieID);
     }
+    public List<Indicator> getIndicatoren() throws SQLException
+    {
+        return db.getIndicatoren();
+    }
     
     public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException
     {
@@ -172,5 +176,10 @@ public class Controller {
     public Indicator getIndicatorByID(Integer indicatorID) throws SQLException
     {
         return db.getIndicatorByID(indicatorID);
+    }
+
+    public Partim getPartimByBeschrijving(String beschrijving) throws SQLException
+            {
+        return db.getPartimByBeschrijving(beschrijving);
     }
 }

@@ -9,6 +9,8 @@ import groep13java.Model.Partim;
 import groep13java.main.User;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JButton;
@@ -39,6 +41,12 @@ public class PartimMetIndicatorenPanel extends JPanel{
         this.user = user;
         initTree();
         koppelButton = new JButton("Koppel partim met indicator");
+        koppelButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                koppelIndicatorMetPartim();
+            }
+        });
         ontkoppelButton = new JButton("Ontkoppel partim met indicator");
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
@@ -93,6 +101,52 @@ public class PartimMetIndicatorenPanel extends JPanel{
     {
         return user.getIndicatorenIDByPartimID(partimID);
     }
+    
+    
+    private void koppelIndicatorMetPartim()
+    {
+        try
+        {
+            String partimKeuze = (String)JOptionPane.showInputDialog(this, "Welke partim wilt u koppelen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getPartimStringList(), null);
+            if(partimKeuze != null)
+            {
+                String indicatorKeuze = (String)JOptionPane.showInputDialog(this, "Welke indicator wilt u koppelen aan " + partimKeuze, "Keuze", JOptionPane.PLAIN_MESSAGE, null, getIndicatorStringList(), null);
+                if(indicatorKeuze != null )
+                {
+                    user.koppelIndicatorMetPartim(user.getIndicatorByBeschrijving(indicatorKeuze).getID(), user.getPartimByBeschrijving(partimKeuze).getID());
+                }
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private String[] getPartimStringList() throws SQLException
+    {
+        List<Partim> partimList = user.getPartims();
+        String[] partimStringList = new String[partimList.size()];
 
+        for(int i = 0; i < partimList.size(); i++)
+        {
+            partimStringList[i] = partimList.get(i).getNaam();
+        }
+
+        return partimStringList;
+    }
+    
+    private String[] getIndicatorStringList() throws SQLException
+    {
+        List<Indicator> indicatorList = user.getNogNietGekoppeldeIndicatoren();
+        String[] indicatorStringList = new String[indicatorList.size()];
+        
+        for(int i = 0; i < indicatorList.size(); i++)
+        {
+            indicatorStringList[i] = indicatorList.get(i).getBeschrijving();
+        }
+        
+        return indicatorStringList;
+    }
 
 }

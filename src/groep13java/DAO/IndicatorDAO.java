@@ -14,7 +14,7 @@ import java.util.List;
  * @author Jellyfish
  */
 public interface IndicatorDAO{
-    public List<Indicator> getIndicators() throws SQLException;
+    public List<Indicator> getIndicatoren() throws SQLException;
     public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException;
     public Indicator getIndicator(Integer ID) throws SQLException;
     public void voegIndicatortoe(String beschrijving, Integer deelcompetentieID) throws SQLException;
