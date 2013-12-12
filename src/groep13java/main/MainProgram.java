@@ -5,10 +5,6 @@
 package groep13java.main;
 
 import groep13java.UI.MainFrame;
-import groep13java.database.Database;
-import groep13java.Model.Student;
-import java.util.List;
-
 /**
  *
  * @author Jellyfish

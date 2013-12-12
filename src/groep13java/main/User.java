@@ -215,4 +215,27 @@ public class User extends Observable{
     {
         control.ontkoppelPartimMetIndicatorenByPartimID(partimID);
     }
+    
+    private List<Indicator> getIndicatoren()
+    {
+        return control.getIndicatoren();
+    }
+    
+    public List<Indicator> getNogNietGekoppeldeIndicatoren() throws SQLException
+    {
+        List<Indicator> nietGekoppeldeIndicatorList = new ArrayList<>();
+        List<Indicator> alleIndicatoren = new ArrayList<>();
+        List<Indicator> gekoppeldeIndicatorList = new ArrayList<>();
+        List<Indicator> indicatorByPartimList = new ArrayList<>();
+        List<Partim> partimList = getPartims();
+        
+        for(int i = 0; i < partimList.size(); i++)
+        {
+            indicatorByPartimList = getIndicatorenIDByPartimID(i);
+            for(int j = 0; j < indicatorByPartimList.size(); j++)
+            {
+                gekoppeldeIndicatorList.add(indicatorByPartimList.get(j));
+            }
+        }
+    }
 }
