@@ -51,10 +51,11 @@ public class PartimDAOImpl implements PartimDAO{
         return partim;
     }
 
+    @Override
     public Partim getPartimByBeschrijving(String beschrijving) throws SQLException
     {
        st = conn.createStatement();
-       stringSQL = "SELECt * FROM partim WHERE beschrijving = '" + beschrijving + "'";
+       stringSQL = "SELECt * FROM partim WHERE naam = '" + beschrijving + "'";
        ResultSet rs = st.executeQuery(stringSQL);
        Integer ID = 0;
        Integer modID = 0;

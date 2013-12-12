@@ -233,6 +233,7 @@ public class User extends Observable{
         List<Indicator> gekoppeldeIndicatorList = new ArrayList<>();
         List<Indicator> indicatorByPartimList;
         List<Partim> partimList = getPartims();
+        boolean checkKoppel;
         
         for(int i = 0; i < partimList.size(); i++)
         {
@@ -240,18 +241,25 @@ public class User extends Observable{
             for(int j = 0; j < indicatorByPartimList.size(); j++)
             {
                 gekoppeldeIndicatorList.add(indicatorByPartimList.get(j));
+                
             }
         }
         
         for(int k = 0; k < alleIndicatoren.size(); k++)
         {
-            for(int l = 0; l < gekoppeldeIndicatorList.size(); l++)
-            {
-                if(alleIndicatoren.get(k) != gekoppeldeIndicatorList.get(l))
-                {
-                    nietGekoppeldeIndicatorList.add(alleIndicatoren.get(k));
-                }
-            } 
+           checkKoppel = false;
+           for(int l = 0; l < gekoppeldeIndicatorList.size(); l++)
+           {
+               if(alleIndicatoren.get(k).getBeschrijving().equals(gekoppeldeIndicatorList.get(l).getBeschrijving()))
+               {
+                   checkKoppel = true;
+               }
+           }
+           
+           if(!checkKoppel)
+           {
+               nietGekoppeldeIndicatorList.add(alleIndicatoren.get(k));
+           }
         }
         
         return nietGekoppeldeIndicatorList;
