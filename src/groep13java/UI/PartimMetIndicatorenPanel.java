@@ -40,33 +40,47 @@ public class PartimMetIndicatorenPanel extends JPanel{
     {
         this.user = user;
         initTree();
-        koppelButton = new JButton("Koppel partim met indicator");
+    }
+    
+    private void initTree()
+    {
+        this.removeAll();
+        topNode = new DefaultMutableTreeNode("Partims");
+        vulPartimTreeIn(topNode);
+        treeModel = new DefaultTreeModel(topNode);
+        partimTree = new JTree(treeModel);
+        scrollPane = new JScrollPane(partimTree);
+        
+        initButtonPanel();
+        
+        this.setLayout(new BorderLayout());          
+        this.add(scrollPane, BorderLayout.CENTER);
+        this.add(buttonPanel, BorderLayout.SOUTH);
+        
+        this.validate();
+        this.repaint();
+    }
+    
+    private void initButtonPanel()
+    {
+        koppelButton = new JButton("Koppel indicator met partim");
         koppelButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 koppelIndicatorMetPartim();
             }
         });
-        ontkoppelButton = new JButton("Ontkoppel partim met indicator");
+        ontkoppelButton = new JButton("Ontkoppel indicator met partim");
+        ontkoppelButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                ontkoppelIndicatorMetPartim();
+            }
+        });
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.add(koppelButton);
         buttonPanel.add(ontkoppelButton);
-        
-        scrollPane = new JScrollPane(partimTree);
-
-        
-        this.setLayout(new BorderLayout());          
-        this.add(scrollPane, BorderLayout.CENTER);
-        this.add(buttonPanel, BorderLayout.SOUTH);
-    }
-    
-    private void initTree()
-    {
-        topNode = new DefaultMutableTreeNode("Partims");
-        vulPartimTreeIn(topNode);
-        treeModel = new DefaultTreeModel(topNode);
-        partimTree = new JTree(treeModel);
     }
     
     private void vulPartimTreeIn(DefaultMutableTreeNode topNode)
@@ -110,12 +124,13 @@ public class PartimMetIndicatorenPanel extends JPanel{
             String partimKeuze = (String)JOptionPane.showInputDialog(this, "Welke partim wilt u koppelen? ", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getPartimStringList(), null);
             if(partimKeuze != null)
             {
-                String indicatorKeuze = (String)JOptionPane.showInputDialog(this, "Welke indicator wilt u koppelen aan " + partimKeuze, "Keuze", JOptionPane.PLAIN_MESSAGE, null, getIndicatorStringList(), null);
+                String indicatorKeuze = (String)JOptionPane.showInputDialog(this, "Welke indicator wilt u koppelen aan " + partimKeuze, "Keuze", JOptionPane.PLAIN_MESSAGE, null, getNietGekoppeldeIndicatorStringList(), null);
                 if(indicatorKeuze != null )
                 {
                     user.koppelIndicatorMetPartim(user.getIndicatorByBeschrijving(indicatorKeuze).getID(), user.getPartimByBeschrijving(partimKeuze).getID());
                 }
             }
+            initTree();
         }
         catch(SQLException e)
         {
@@ -136,7 +151,7 @@ public class PartimMetIndicatorenPanel extends JPanel{
         return partimStringList;
     }
     
-    private String[] getIndicatorStringList() throws SQLException
+    private String[] getNietGekoppeldeIndicatorStringList() throws SQLException
     {
         List<Indicator> indicatorList = user.getNogNietGekoppeldeIndicatoren();
         String[] indicatorStringList = new String[indicatorList.size()];
@@ -148,5 +163,38 @@ public class PartimMetIndicatorenPanel extends JPanel{
         
         return indicatorStringList;
     }
-
+    
+    private String[] getGekoppeldeIndicatorStringList(Integer partimID) throws SQLException
+    {
+        List<Indicator> indicatorList = user.getIndicatorenIDByPartimID(partimID);
+        String[] indicatorStringList = new String[indicatorList.size()];
+        
+        for(int i = 0; i < indicatorList.size(); i++)
+        {
+            indicatorStringList[i] = indicatorList.get(i).getBeschrijving();
+        }
+        
+        return indicatorStringList;
+    } 
+    
+    private void ontkoppelIndicatorMetPartim()
+    {
+        try
+        {
+        String partimKeuze = (String)JOptionPane.showInputDialog(this, "Van welke partim wilt u de indicator ontkoppelen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getPartimStringList(), null);
+            if(partimKeuze != null)
+            {
+                String indicatorKeuze = (String)JOptionPane.showInputDialog(this, "Welke indicator wilt u koppelen aan " + partimKeuze, "Keuze", JOptionPane.PLAIN_MESSAGE, null, getGekoppeldeIndicatorStringList(user.getPartimByBeschrijving(partimKeuze).getID()), null);
+                if(indicatorKeuze != null )
+                {
+                    user.ontkoppelIndicatorMetPartimByIndicatorID(user.getIndicatorByBeschrijving(indicatorKeuze).getID());
+                }
+            }
+            initTree();
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
 }
