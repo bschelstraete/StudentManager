@@ -27,6 +27,7 @@ import javax.swing.tree.*;
 public class PartimMetIndicatorenPanel extends JPanel{
     private JButton koppelButton;
     private JButton ontkoppelButton;
+    private JButton ontkoppelPartimButton;
     private JTree partimTree;
     private DefaultTreeModel treeModel;
     private DefaultMutableTreeNode topNode;
@@ -77,10 +78,20 @@ public class PartimMetIndicatorenPanel extends JPanel{
                 ontkoppelIndicatorMetPartim();
             }
         });
+        
+        ontkoppelPartimButton = new JButton("Ontkoppel partim met indicatoren");
+        ontkoppelPartimButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                ontkoppelPartimMetIndicatoren();
+            }
+        });
+        
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.add(koppelButton);
         buttonPanel.add(ontkoppelButton);
+        buttonPanel.add(ontkoppelPartimButton);
     }
     
     private void vulPartimTreeIn(DefaultMutableTreeNode topNode)
@@ -189,6 +200,24 @@ public class PartimMetIndicatorenPanel extends JPanel{
                 {
                     user.ontkoppelIndicatorMetPartimByIndicatorID(user.getIndicatorByBeschrijving(indicatorKeuze).getID());
                 }
+            }
+            initTree();
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void ontkoppelPartimMetIndicatoren()
+    {
+        try
+        {
+            String partimKeuze = (String)JOptionPane.showInputDialog(this, "Van welke partim wilt u de indicatoren ontkoppelen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getPartimStringList(), null);
+            int confirm = JOptionPane.showConfirmDialog(this, "Alle indicatoren gelinkt aan deze partim zullen ontkoppeld worden.\nWilt u hiermee doorgaan?");
+            if(confirm == JOptionPane.OK_OPTION)
+            {
+                user.ontkoppelPartimMetIndicatorenByPartimID(user.getPartimByBeschrijving(partimKeuze).getID());
             }
             initTree();
         }

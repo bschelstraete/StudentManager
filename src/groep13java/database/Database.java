@@ -202,4 +202,14 @@ public class Database {
     {
         return partimImp.getPartimByBeschrijving(beschrijving);
     }
+
+    public Student getStudentByVoornaamEnFamilienaam(String voornaam, String familienaam) throws SQLException
+    {
+        return studentImp.getStudentByVoornaamEnFamilienaam(voornaam, familienaam);
+    }
+
+    public List<Partim> getPartimsByStudentID(Integer studID) throws SQLException
+    {
+        return partimImp.getPartimListByStudID(studID);
+    }
 }

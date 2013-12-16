@@ -254,4 +254,17 @@ public class User{
         
         return nietGekoppeldeIndicatorList;
     }
+
+    public List<Partim> getPartimStringByStudentNaam(String naam) throws SQLException
+    {
+        Student student = getStudentByNaam(naam);
+        return control.getPartimsByStudentID(student.getID());
+    }
+
+    private Student getStudentByNaam(String naam) throws SQLException
+    {
+        String[] naamArray = naam.split(" ", 2);
+        Student student = control.getStudentByVoornaamEnFamilienaam(naamArray[0], naamArray[1]);
+        return student;
+    }
 }

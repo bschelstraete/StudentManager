@@ -182,4 +182,14 @@ public class Controller {
             {
         return db.getPartimByBeschrijving(beschrijving);
     }
+
+    public Student getStudentByVoornaamEnFamilienaam(String voornaam, String familienaam) throws SQLException
+    {
+        return db.getStudentByVoornaamEnFamilienaam(voornaam, familienaam);
+    }
+
+    public List<Partim> getPartimsByStudentID(Integer studID) throws SQLException 
+    {
+        return db.getPartimsByStudentID(studID);
+    }
 }

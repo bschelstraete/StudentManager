@@ -4,7 +4,6 @@
  */
 package groep13java.DAO;
 
-import groep13java.Model.Indicator;
 import groep13java.Model.Partim;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,5 +65,24 @@ public class PartimDAOImpl implements PartimDAO{
        }
        
        return new Partim(ID, beschrijving, modID);
+    }
+    
+    @Override
+    public List<Partim> getPartimListByStudID(Integer studID) throws SQLException
+    {
+        List<Partim> partimList = new ArrayList();
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM partim p\n" +
+                    "JOIN module m ON m.ID = p.modID \n" +
+                    "JOIN student_in_module sm ON sm.modID = m.ID \n" +
+                    "WHERE sm.studID = " + studID;
+        ResultSet rs = st.executeQuery(stringSQL);
+        while(rs.next())
+        {
+            Partim partim = new Partim(rs.getInt("ID"), rs.getString("naam"), rs.getInt("modID"));
+            partimList.add(partim);
+        }
+        
+        return partimList;
     }
 }
