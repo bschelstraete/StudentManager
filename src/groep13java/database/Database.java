@@ -29,6 +29,7 @@ public class Database {
     private final IndicatorDAOImpl indicatorImp;
     private final CompetentieOnDeelcompetentieDAOImpl competentieOnDeelcompetentieImp;
     private final IndicatorOnPartimDAOImpl indicatorOnPartimImp;
+    private final StudentPrestatieDAOImpl studentPrestatieImp;
             
     public Database()
     {
@@ -42,6 +43,7 @@ public class Database {
         indicatorImp = new IndicatorDAOImpl();
         competentieOnDeelcompetentieImp = new CompetentieOnDeelcompetentieDAOImpl();
         indicatorOnPartimImp = new IndicatorOnPartimDAOImpl();
+        studentPrestatieImp = new StudentPrestatieDAOImpl();
     }
     
     public List<Student> getStudenten() throws SQLException
@@ -211,5 +213,10 @@ public class Database {
     public List<Partim> getPartimsByStudentID(Integer studID) throws SQLException
     {
         return partimImp.getPartimListByStudID(studID);
+    }
+
+    public void insertScoreVoorIndicatorByStudentID(Integer indicatorScore, Integer indicatorID, Integer studentID) throws SQLException
+    {
+        studentPrestatieImp.insertScoreVoorIndicatorByStudentID(indicatorScore, indicatorID, studentID);
     }
 }

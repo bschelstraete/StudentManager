@@ -106,7 +106,7 @@ public class StudentListPanel extends JPanel{
                             Integer indicatorScore = Integer.parseInt(score);
                             if(indicatorScore > 0 && indicatorScore <= 20)
                             {
-                                
+                                user.insertScoreVoorIndicatorByStudentID(indicatorScore, indicatorKeuze, studentKeuze);
                             }
                             else
                             {

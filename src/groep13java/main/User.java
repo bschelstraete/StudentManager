@@ -267,4 +267,11 @@ public class User{
         Student student = control.getStudentByVoornaamEnFamilienaam(naamArray[0], naamArray[1]);
         return student;
     }
+
+    public void insertScoreVoorIndicatorByStudentID(Integer indicatorScore, String indicatorKeuze, String studentKeuze) throws SQLException
+    {
+        Student student = getStudentByNaam(studentKeuze);
+        Indicator indicator = getIndicatorByBeschrijving(indicatorKeuze);
+        control.insertScoreVoorIndicatorByStudentID(indicatorScore, indicator.getID(), student.getID());
+    }
 }

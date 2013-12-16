@@ -192,4 +192,9 @@ public class Controller {
     {
         return db.getPartimsByStudentID(studID);
     }
+
+    public void insertScoreVoorIndicatorByStudentID(Integer indicatorScore, Integer indicatorID, Integer studentID) throws SQLException
+    {
+        db.insertScoreVoorIndicatorByStudentID(indicatorScore, indicatorID, studentID);
+    }
 }
