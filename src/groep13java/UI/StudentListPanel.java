@@ -84,7 +84,18 @@ public class StudentListPanel extends JPanel{
         {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        return new JTable(studentObject, columnNames);
+        JTable table = new JTable(studentObject, columnNames);
+        setTableNonEditable(table);
+        return table;
+    }
+    
+    private void setTableNonEditable(JTable table)
+    {
+        for (int c = 0; c < table.getColumnCount(); c++)
+        {
+            Class<?> col_class = table.getColumnClass(c);
+            table.setDefaultEditor(col_class, null); 
+        }
     }
     
     private void vulIndicatorInVoorStudent()
