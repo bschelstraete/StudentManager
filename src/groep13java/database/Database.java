@@ -10,6 +10,7 @@ import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
 import groep13java.Model.Partim;
 import groep13java.Model.Student;
+import groep13java.Model.StudentPrestatie;
 import java.sql.Connection;
 import java.util.List;
 import java.sql.SQLException;
@@ -218,5 +219,15 @@ public class Database {
     public void insertScoreVoorIndicatorByStudentID(Integer indicatorScore, Integer indicatorID, Integer studentID) throws SQLException
     {
         studentPrestatieImp.insertScoreVoorIndicatorByStudentID(indicatorScore, indicatorID, studentID);
+    }
+    
+    public List<StudentPrestatie> getPrestatieByStudent(Student student) throws SQLException
+    {
+        return studentPrestatieImp.getPrestatieByStudent(student);
+    }
+    
+    public List<StudentPrestatie> getPrestatieByStudentAndDeelcompetentieID(Student student, Integer deelcompID) throws SQLException
+    {
+        return studentPrestatieImp.getPrestatieByStudentAndDeelcompetentieID(student, deelcompID);
     }
 }

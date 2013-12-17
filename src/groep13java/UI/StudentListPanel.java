@@ -26,7 +26,7 @@ import javax.swing.JTable;
 public class StudentListPanel extends JPanel{
     private JScrollPane scrollPane;
     private JTable studentTable;
-    private String[] columnNames = {"ID", "familienaam", "voornaam"};;
+    private String[] columnNames = {"ID", "Naam"};
     private Object[][] studentObject;
     private List<Student> studentList;
     private List<Partim> partimList;
@@ -34,6 +34,7 @@ public class StudentListPanel extends JPanel{
     private JButton competentieButton;
     private JButton invoerenIndicator;
     private User user;
+    private StudentOpvolgPanel studentOpvolgPanel;   
     
     public StudentListPanel(User user)
     {
@@ -71,13 +72,12 @@ public class StudentListPanel extends JPanel{
         try
         {
             studentList = user.getStudenten();
-            studentObject = new Object[studentList.size()][3];
+            studentObject = new Object[studentList.size()][2];
 
             for(int i = 0; i < user.getStudenten().size(); i++)
             {
                 studentObject[i][0] = studentList.get(i).getID();
-                studentObject[i][1] = studentList.get(i).getFamilienaam();
-                studentObject[i][2] = studentList.get(i).getVoornaam();
+                studentObject[i][1] = studentList.get(i).getVoornaam() + " " + studentList.get(i).getFamilienaam();
             }
         }
         catch(SQLException e)
@@ -175,5 +175,12 @@ public class StudentListPanel extends JPanel{
         }
         
         return indicatorStringList;
+    }
+    
+    private void getPrestatiesByStudent(String naam) throws SQLException
+    {
+        Student student = user.getStudentByNaam(naam);
+        studentOpvolgPanel = new StudentOpvolgPanel(student, user);
+        JOptionPane.showMessageDialog(this, studentOpvolgPanel, "Opvolging van " + student.getVoornaam() + student.getFamilienaam(), JOptionPane.INFORMATION_MESSAGE);
     }
 }

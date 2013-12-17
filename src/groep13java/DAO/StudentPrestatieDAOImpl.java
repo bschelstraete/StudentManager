@@ -20,7 +20,7 @@ public class StudentPrestatieDAOImpl implements StudentPrestatieDAO{
     private String stringSQL;
     private Statement st;
     private PreparedStatement prepSt;
-    
+     
     @Override
     public void insertScoreVoorIndicatorByStudentID(Integer indicatorScore, Integer indicatorID, Integer studentID) throws SQLException 
     {
@@ -45,4 +45,21 @@ public class StudentPrestatieDAOImpl implements StudentPrestatieDAO{
         return prestatieList;        
     }
     
+    @Override
+    public List<StudentPrestatie> getPrestatieByStudentAndDeelcompetentieID(Student student, Integer deelcompID) throws SQLException
+    {
+        List<StudentPrestatie> prestatieList = new ArrayList();
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM studentprestatie sp "
+                    + "JOIN indicator i ON i.ID = sp.indID "
+                    + "WHERE i.deelcompID = " + deelcompID + "AND sp.studID = " + student.getID();
+        ResultSet rs = st.executeQuery(stringSQL);
+        while(rs.next())
+        {
+            StudentPrestatie prestatie = new StudentPrestatie(rs.getInt("studID"), rs.getInt("indID"), rs.getInt("score"));
+            prestatieList.add(prestatie);
+        }
+        
+        return prestatieList;
+    }
 }

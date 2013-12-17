@@ -21,7 +21,7 @@ public class DAO {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://localhost/javadb";
             String uName = "root";
-            String uPassword = "gojira";
+            String uPassword = "";
             conn = DriverManager.getConnection(host, uName, uPassword);
         }
         catch(SQLException | ClassNotFoundException |InstantiationException | IllegalAccessException ex){

@@ -10,6 +10,7 @@ import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
 import groep13java.Model.Partim;
 import groep13java.Model.Student;
+import groep13java.Model.StudentPrestatie;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -261,7 +262,7 @@ public class User{
         return control.getPartimsByStudentID(student.getID());
     }
 
-    private Student getStudentByNaam(String naam) throws SQLException
+    public Student getStudentByNaam(String naam) throws SQLException
     {
         String[] naamArray = naam.split(" ", 2);
         Student student = control.getStudentByVoornaamEnFamilienaam(naamArray[0], naamArray[1]);
@@ -274,4 +275,10 @@ public class User{
         Indicator indicator = getIndicatorByBeschrijving(indicatorKeuze);
         control.insertScoreVoorIndicatorByStudentID(indicatorScore, indicator.getID(), student.getID());
     }
+    
+    public List<StudentPrestatie> getPrestatieByStudent(Student student) throws SQLException
+    {
+        return control.getPrestatieByStudent(student);
+    }
+    
 }
