@@ -16,4 +16,5 @@ public interface PartimDAO {
     public List<Partim> getPartims() throws SQLException;
     public Partim getPartim(Integer ID) throws SQLException;
     public Partim getPartimByBeschrijving(String beschrijving) throws SQLException;
+    public List<Partim> getPartimListByStudID(Integer studID) throws SQLException;
 }

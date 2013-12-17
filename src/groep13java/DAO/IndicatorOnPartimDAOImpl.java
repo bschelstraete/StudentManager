@@ -4,8 +4,6 @@
  */
 package groep13java.DAO;
 
-import groep13java.Model.Indicator;
-import groep13java.Model.Partim;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

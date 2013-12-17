@@ -46,7 +46,26 @@ public class StudentDAOImpl implements StudentDAO{
         st = conn.createStatement();
         stringSQL = "SELECT * FROM student WHERE ID = " + ID;
         ResultSet rs = st.executeQuery(stringSQL);
-        Student student  = new Student(rs.getInt("ID"), rs.getString("familienaam"), rs.getString("voornaam"));
-        return student;
+        String voornaam = "";
+        String familienaam = "";
+        while(rs.next())
+        {
+            voornaam = rs.getString("voornaam");
+            familienaam = rs.getString("familienaam");
+        }
+        return new Student(ID, voornaam, familienaam);
+    }
+
+    public Student getStudentByVoornaamEnFamilienaam(String voornaam, String familienaam) throws SQLException
+    {
+        st = conn.createStatement(); 
+        stringSQL = "SELECT * FROM student WHERE voornaam = '" + voornaam + "' AND familienaam = '" + familienaam + "'";
+        ResultSet rs = st.executeQuery(stringSQL);
+        Integer ID = 0;
+        while(rs.next())
+        {
+            ID = rs.getInt("ID");
+        }
+        return new Student(ID, voornaam, familienaam);
     }
 }

@@ -10,25 +10,17 @@ import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
 import groep13java.Model.Partim;
 import groep13java.Model.Student;
-import groep13java.Observer.Observer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
-public class User extends Observable{
+
+public class User{
     private Controller control;
-    private ArrayList<Observer> observerList;
     
     public User()
     {
         control = new Controller();
-        observerList = new ArrayList<>();
-    }
-    
-    public void addObserver(Observer newObserver)
-    {
-        observerList.add(newObserver);
     }
 
     public List<Student> getStudenten() throws SQLException
@@ -63,8 +55,6 @@ public class User extends Observable{
     public void voegCompetentieToe(String newCompetentie) throws SQLException
     {
         control.voegCompetentieToe(newCompetentie);
-        setChanged();
-        notifyObservers();
     }
     
     public void koppelDeelcompetentieAanCompetentie(String compBeschrijving, String deelcompBeschrijving) throws SQLException
@@ -233,6 +223,7 @@ public class User extends Observable{
         List<Indicator> gekoppeldeIndicatorList = new ArrayList<>();
         List<Indicator> indicatorByPartimList;
         List<Partim> partimList = getPartims();
+        boolean checkKoppel;
         
         for(int i = 0; i < partimList.size(); i++)
         {
@@ -240,20 +231,47 @@ public class User extends Observable{
             for(int j = 0; j < indicatorByPartimList.size(); j++)
             {
                 gekoppeldeIndicatorList.add(indicatorByPartimList.get(j));
+                
             }
         }
         
         for(int k = 0; k < alleIndicatoren.size(); k++)
         {
-            for(int l = 0; l < gekoppeldeIndicatorList.size(); l++)
-            {
-                if(alleIndicatoren.get(k) != gekoppeldeIndicatorList.get(l))
-                {
-                    nietGekoppeldeIndicatorList.add(alleIndicatoren.get(k));
-                }
-            } 
+           checkKoppel = false;
+           for(int l = 0; l < gekoppeldeIndicatorList.size(); l++)
+           {
+               if(alleIndicatoren.get(k).getBeschrijving().equals(gekoppeldeIndicatorList.get(l).getBeschrijving()))
+               {
+                   checkKoppel = true;
+               }
+           }
+           
+           if(!checkKoppel)
+           {
+               nietGekoppeldeIndicatorList.add(alleIndicatoren.get(k));
+           }
         }
         
         return nietGekoppeldeIndicatorList;
+    }
+
+    public List<Partim> getPartimStringByStudentNaam(String naam) throws SQLException
+    {
+        Student student = getStudentByNaam(naam);
+        return control.getPartimsByStudentID(student.getID());
+    }
+
+    private Student getStudentByNaam(String naam) throws SQLException
+    {
+        String[] naamArray = naam.split(" ", 2);
+        Student student = control.getStudentByVoornaamEnFamilienaam(naamArray[0], naamArray[1]);
+        return student;
+    }
+
+    public void insertScoreVoorIndicatorByStudentID(Integer indicatorScore, String indicatorKeuze, String studentKeuze) throws SQLException
+    {
+        Student student = getStudentByNaam(studentKeuze);
+        Indicator indicator = getIndicatorByBeschrijving(indicatorKeuze);
+        control.insertScoreVoorIndicatorByStudentID(indicatorScore, indicator.getID(), student.getID());
     }
 }

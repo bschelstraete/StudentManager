@@ -9,9 +9,9 @@ import groep13java.Model.Partim;
 import groep13java.Model.Student;
 import groep13java.main.User;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JButton;
@@ -29,6 +29,7 @@ public class StudentListPanel extends JPanel{
     private String[] columnNames = {"ID", "familienaam", "voornaam"};;
     private Object[][] studentObject;
     private List<Student> studentList;
+    private List<Partim> partimList;
     private JPanel buttonPanel;
     private JButton competentieButton;
     private JButton invoerenIndicator;
@@ -51,9 +52,14 @@ public class StudentListPanel extends JPanel{
         JPanel buffer = new JPanel();
         competentieButton = new JButton("progressie");
         invoerenIndicator = new JButton("Indicators invoeren");
+        invoerenIndicator.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                vulIndicatorInVoorStudent();
+            }
+        });
         
         buffer.setLayout(new FlowLayout());
-        
         buffer.add(competentieButton);
         buffer.add(invoerenIndicator);
         
@@ -78,6 +84,96 @@ public class StudentListPanel extends JPanel{
         {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        return new JTable(studentObject, columnNames);
+        JTable table = new JTable(studentObject, columnNames);
+        setTableNonEditable(table);
+        return table;
+    }
+    
+    private void setTableNonEditable(JTable table)
+    {
+        for (int c = 0; c < table.getColumnCount(); c++)
+        {
+            Class<?> col_class = table.getColumnClass(c);
+            table.setDefaultEditor(col_class, null); 
+        }
+    }
+    
+    private void vulIndicatorInVoorStudent()
+    {
+        try
+        {
+            String studentKeuze = (String)JOptionPane.showInputDialog(this, "Voor welke student wilt u een score toevoegen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getStudentenString(), null);
+            if(studentKeuze != null)
+            {
+                String partimKeuze = (String)JOptionPane.showInputDialog(this, "Voor welke partim wilt u een score toevoegen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getPartimStringByStudentNaam(studentKeuze), null);
+                if(partimKeuze != null)
+                {
+                    String indicatorKeuze = (String)JOptionPane.showInputDialog(this, "Voor welke indicator wilt u een score(0 tot 20) toevoegen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getIndicatorStringListByPartimID(user.getPartimByBeschrijving(partimKeuze).getID()), null);
+                    if(indicatorKeuze != null)
+                    {
+                        String score = (String)JOptionPane.showInputDialog(this, "Voor een score in voor " + indicatorKeuze);
+                        try
+                        {
+                            Integer indicatorScore = Integer.parseInt(score);
+                            if(indicatorScore > 0 && indicatorScore <= 20)
+                            {
+                                user.insertScoreVoorIndicatorByStudentID(indicatorScore, indicatorKeuze, studentKeuze);
+                            }
+                            else
+                            {
+                                throw new NumberFormatException();
+                            }
+                        }
+                       catch(NumberFormatException e)
+                       {
+                           JOptionPane.showMessageDialog(this, "Geen geldig formaat, u moet een cijfer ingeven tussen 0 en 20!");
+                       }
+                    }
+                }
+            }
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private String[] getStudentenString() throws SQLException
+    {
+        studentList = user.getStudenten();
+        String[] studentStringList = new String[studentList.size()];
+        for(int i = 0; i < studentList.size(); i++)
+        {
+            studentStringList[i] = studentList.get(i).getVoornaam() + " " + studentList.get(i).getFamilienaam();
+        }
+        
+        return studentStringList;
+    }
+    
+    private String[] getPartimStringByStudentNaam(String naam) throws SQLException
+    {
+        partimList = user.getPartimStringByStudentNaam(naam);
+        String[] partimStringList = new String[partimList.size()];
+        
+        for(int i = 0; i < partimList.size(); i++)
+        {
+            partimStringList[i] = partimList.get(i).getNaam();
+        }
+        
+        
+        return partimStringList;
+    }
+    
+    private String[] getIndicatorStringListByPartimID(Integer partID) throws SQLException
+    {
+        List <Indicator> indicatorList = user.getIndicatorenIDByPartimID(partID);
+        String[] indicatorStringList = new String[indicatorList.size()];
+        
+        for(int i = 0; i < indicatorList.size(); i++)
+        {
+            indicatorStringList[i] = indicatorList.get(i).getBeschrijving();
+        }
+        
+        return indicatorStringList;
     }
 }
