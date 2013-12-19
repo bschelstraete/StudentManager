@@ -9,10 +9,7 @@ import javax.swing.*;
 
 
 
-/**
- *
- * @author Jellyfish
- */
+
 public class Tabs extends JTabbedPane {
     CompetentiePanel competentiePane;
     StudentListPanel studentPane;

@@ -8,6 +8,7 @@ import groep13java.DAO.*;
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
+import groep13java.Model.Opleiding;
 import groep13java.Model.Partim;
 import groep13java.Model.Student;
 import groep13java.Model.StudentPrestatie;
@@ -15,10 +16,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.sql.SQLException;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class Database {
     private final Connection conn;
     private final CompetentieDAOImpl competentieImp;
@@ -229,5 +227,25 @@ public class Database {
     public List<StudentPrestatie> getPrestatieByStudentAndDeelcompetentieID(Student student, Integer deelcompID) throws SQLException
     {
         return studentPrestatieImp.getPrestatieByStudentAndDeelcompetentieID(student, deelcompID);
+    }
+    
+    public Opleiding getOpleidingByStudent(Student student) throws SQLException
+    {
+        return opleidingImp.getOpleidingByStudent(student);
+    }
+    
+    public List<Competentie> getCompetentieByStudent(Student student) throws SQLException
+    {
+        return competentieImp.getCompetentieByStudent(student);
+    }
+    
+    public List<Deelcompetentie> getDeelcompetentieByStudentAndCompetentieID(Student student, Integer competentieID) throws SQLException
+    {
+        return deelcompetentieImp.getDeelcompetentieByStudentAndCompetentieID(student, competentieID);
+    }
+    
+    public Integer getScoreByIndicatorAndStudent(Indicator indicator, Student student) throws SQLException
+    {
+        return studentPrestatieImp.getScoreByIndicatorAndStudent(indicator, student);
     }
 }

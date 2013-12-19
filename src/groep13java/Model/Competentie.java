@@ -4,10 +4,7 @@
  */
 package groep13java.Model;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class Competentie {
     private Integer id;
     private String beschrijving;

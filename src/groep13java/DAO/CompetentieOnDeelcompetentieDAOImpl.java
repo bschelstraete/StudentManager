@@ -11,10 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class CompetentieOnDeelcompetentieDAOImpl implements CompetentieOnDeelcompetentieDAO{
     private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();

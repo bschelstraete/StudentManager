@@ -5,6 +5,7 @@
 package groep13java.DAO;
 
 import groep13java.Model.Competentie;
+import groep13java.Model.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,10 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class CompetentieDAOImpl implements CompetentieDAO {
     private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();
@@ -67,7 +65,27 @@ public class CompetentieDAOImpl implements CompetentieDAO {
         }
         return new Competentie(ID, beschrijving);
     }
-
+    
+    @Override
+    public List<Competentie> getCompetentieByStudent(Student student) throws SQLException
+    {
+        List<Competentie> competentieList = new ArrayList();
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM competentie c "
+                + "JOIN competentie_deelcompetentie cd ON cd.compID = c.ID "
+                + "JOIN deelcompetentie dc ON dc.ID = cd.deelcompID "
+                + "JOIN indicator i ON dc.ID = i.deelcompID "
+                + "JOIN studentprestatie sp ON sp.indID = i.ID "
+                + "WHERE sp.studID = " + student.getID()
+                + " GROUP BY c.beschrijving";
+        ResultSet rs = st.executeQuery(stringSQL);
+        while(rs.next())
+        {
+            competentieList.add(new Competentie(rs.getInt("ID"), rs.getString("beschrijving")));
+        }
+        return competentieList;
+    }
+    
     @Override
     public void voegCompetentieToe(String newCompetentie)  throws SQLException{
             prepSt = conn.prepareStatement("INSERT INTO competentie(beschrijving) VALUES('" + newCompetentie + "')");

@@ -8,10 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class IndicatorOnPartimDAOImpl implements IndicatorOnPartimDAO{
     private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();

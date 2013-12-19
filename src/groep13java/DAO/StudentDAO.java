@@ -6,10 +6,7 @@ package groep13java.DAO;
 import groep13java.Model.Student;
 import java.sql.SQLException;
 import java.util.List;
-/**
- *
- * @author Jellyfish
- */
+
 public interface StudentDAO {
     public List<Student> getStudenten() throws SQLException;
     public Student getStudent(Integer ID) throws SQLException;

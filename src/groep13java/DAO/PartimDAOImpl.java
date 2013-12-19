@@ -13,10 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class PartimDAOImpl implements PartimDAO{
     private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();

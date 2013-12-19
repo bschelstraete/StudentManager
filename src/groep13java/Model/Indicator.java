@@ -4,10 +4,7 @@
  */
 package groep13java.Model;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class Indicator {
     private Integer  id;
     private String naam;

@@ -4,10 +4,7 @@
  */
 package groep13java.Model;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class Deelcompetentie {
     private Integer id;
     private String beschrijving;

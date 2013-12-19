@@ -7,6 +7,7 @@ package groep13java.Controller;
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
+import groep13java.Model.Opleiding;
 import groep13java.Model.Partim;
 import groep13java.Model.Student;
 import groep13java.Model.StudentPrestatie;
@@ -14,10 +15,6 @@ import groep13java.database.Database;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
 public class Controller {
     private Database db;
     
@@ -208,4 +205,25 @@ public class Controller {
     {
         return db.getPrestatieByStudentAndDeelcompetentieID(student, deelcompID);
     }
+    
+    public Opleiding getOpleidingByStudent(Student student) throws SQLException
+    {
+        return db.getOpleidingByStudent(student);
+    }
+    
+    public List<Competentie> getCompetentieByStudent(Student student) throws SQLException
+    {
+        return db.getCompetentieByStudent(student);
+    }
+    
+    public List<Deelcompetentie> getDeelcompetentieByStudentAndCompetentieID(Student student, Integer competentieID) throws SQLException
+    {
+        return db.getDeelcompetentieByStudentAndCompetentieID(student, competentieID);
+    }
+    
+    public Integer getScoreByIndicatorAndStudent(Indicator indicator, Student student) throws SQLException
+    {
+        return db.getScoreByIndicatorAndStudent(indicator, student);
+    }
 }
+

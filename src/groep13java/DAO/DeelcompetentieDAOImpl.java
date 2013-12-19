@@ -5,6 +5,7 @@
 package groep13java.DAO;
 
 import groep13java.Model.Deelcompetentie;
+import groep13java.Model.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,10 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
     private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();
@@ -71,6 +69,27 @@ public class DeelcompetentieDAOImpl implements DeelcompetentieDAO{
         return new Deelcompetentie(ID, beschrijving);
     }
 
+    @Override
+    public List<Deelcompetentie> getDeelcompetentieByStudentAndCompetentieID(Student student, Integer competentieID) throws SQLException
+    {
+        List<Deelcompetentie> competentieList = new ArrayList();
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM deelcompetentie dc "
+                + "JOIN competentie_deelcompetentie c_d ON c_d.deelcompID = dc.ID "
+                + "JOIN indicator i ON dc.ID = i.deelcompID "
+                + "JOIN studentprestatie sp ON sp.indID = i.ID "
+                + "WHERE sp.studID = " + student.getID() + " AND c_d.compID = " + competentieID
+                + " GROUP BY dc.ID";
+        ResultSet rs = st.executeQuery(stringSQL);
+        while(rs.next())
+        {
+            Deelcompetentie dc = new Deelcompetentie(rs.getInt("ID"), rs.getString("beschrijving"));
+            competentieList.add(dc);
+        }
+        
+        return competentieList;
+    }
+    
     @Override
     public void voegDeelcompetentieToe(String beschrijving) throws SQLException {
             prepSt = conn.prepareStatement("INSERT INTO deelcompetentie(beschrijving) VALUES('" + beschrijving + "')");

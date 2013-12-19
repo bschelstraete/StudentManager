@@ -8,6 +8,7 @@ import groep13java.Controller.Controller;
 import groep13java.Model.Competentie;
 import groep13java.Model.Deelcompetentie;
 import groep13java.Model.Indicator;
+import groep13java.Model.Opleiding;
 import groep13java.Model.Partim;
 import groep13java.Model.Student;
 import groep13java.Model.StudentPrestatie;
@@ -281,4 +282,23 @@ public class User{
         return control.getPrestatieByStudent(student);
     }
     
+    public Opleiding getOpleidingByStudent(Student student) throws SQLException
+    {
+        return control.getOpleidingByStudent(student);
+    }
+    
+    public List<Competentie> getCompetentieByStudent(Student student) throws SQLException
+    {
+        return control.getCompetentieByStudent(student);
+    }
+    
+    public List<Deelcompetentie> getDeelcompetentieByStudentAndCompetentieID(Student student, Integer competentieID) throws SQLException
+    {
+        return control.getDeelcompetentieByStudentAndCompetentieID(student, competentieID);
+    }
+    
+    public Integer getScoreByIndicatorAndStudent(Indicator indicator, Student student) throws SQLException
+    {
+        return control.getScoreByIndicatorAndStudent(indicator, student);
+    }
 }

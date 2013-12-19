@@ -13,10 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class ModuleDAOImpl implements ModuleDAO{
     private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();

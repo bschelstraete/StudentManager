@@ -12,6 +12,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JButton;
@@ -19,10 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-/**
- *
- * @author Jellyfish
- */
+
 public class StudentListPanel extends JPanel{
     private JScrollPane scrollPane;
     private JTable studentTable;
@@ -52,6 +51,13 @@ public class StudentListPanel extends JPanel{
     {
         JPanel buffer = new JPanel();
         competentieButton = new JButton("progressie");
+        competentieButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                getPrestatiesByStudent();
+            }
+        });
+        
         invoerenIndicator = new JButton("Indicators invoeren");
         invoerenIndicator.addActionListener(new ActionListener(){
             @Override
@@ -85,9 +91,28 @@ public class StudentListPanel extends JPanel{
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
         JTable table = new JTable(studentObject, columnNames);
+        table.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                if(e.getClickCount() == 2)
+                {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    int column = 1;
+                    String naam = (String)GetData(target, row, column);
+                    getPrestatiesByStudent(naam);
+                }
+            }
+        });
         setTableNonEditable(table);
         return table;
     }
+    
+    public Object GetData(JTable table, int row_index, int col_index)
+    {
+        return table.getModel().getValueAt(row_index, col_index);
+    } 
     
     private void setTableNonEditable(JTable table)
     {
@@ -177,10 +202,33 @@ public class StudentListPanel extends JPanel{
         return indicatorStringList;
     }
     
-    private void getPrestatiesByStudent(String naam) throws SQLException
+    private void getPrestatiesByStudent()
     {
-        Student student = user.getStudentByNaam(naam);
-        studentOpvolgPanel = new StudentOpvolgPanel(student, user);
-        JOptionPane.showMessageDialog(this, studentOpvolgPanel, "Opvolging van " + student.getVoornaam() + student.getFamilienaam(), JOptionPane.INFORMATION_MESSAGE);
+        try
+        {
+            String naam = (String)JOptionPane.showInputDialog(this, "Voor welke student wilt u een score toevoegen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getStudentenString(), null);
+            Student student = user.getStudentByNaam(naam);
+            studentOpvolgPanel = new StudentOpvolgPanel(student, user);
+            JOptionPane.showMessageDialog(this, studentOpvolgPanel, "Opvolging van " + student.getVoornaam() + " " + student.getFamilienaam(), JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void getPrestatiesByStudent(String naam) 
+    {
+        try
+        {
+            Student student = user.getStudentByNaam(naam);
+            studentOpvolgPanel = new StudentOpvolgPanel(student, user);
+            JOptionPane.showMessageDialog(this, studentOpvolgPanel, "Opvolging van " + student.getVoornaam() + " " + student.getFamilienaam(), JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
     }
 }

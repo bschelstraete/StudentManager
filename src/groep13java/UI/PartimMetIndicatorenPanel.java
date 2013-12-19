@@ -20,10 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.*;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class PartimMetIndicatorenPanel extends JPanel{
     private JButton koppelButton;
     private JButton ontkoppelButton;

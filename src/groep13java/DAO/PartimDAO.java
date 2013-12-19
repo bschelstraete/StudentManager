@@ -8,10 +8,7 @@ import groep13java.Model.Partim;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public interface PartimDAO {
     public List<Partim> getPartims() throws SQLException;
     public Partim getPartim(Integer ID) throws SQLException;

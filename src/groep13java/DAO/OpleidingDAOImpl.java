@@ -5,6 +5,7 @@
 package groep13java.DAO;
 
 import groep13java.Model.Opleiding;
+import groep13java.Model.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,10 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class OpleidingDAOImpl implements OpleidingDAO{
     private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();
@@ -49,5 +47,25 @@ public class OpleidingDAOImpl implements OpleidingDAO{
         ResultSet rs = st.executeQuery(stringSQL);
         Opleiding opleiding = new Opleiding(rs.getInt("ID"), rs.getString("naam"));
         return opleiding;
+    }
+    
+    @Override
+    public Opleiding getOpleidingByStudent(Student student) throws SQLException
+    {
+        Integer ID = 0;
+        String naam = "";
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM opleiding o "
+                    + "JOIN module m ON m.oplID = o.ID "
+                    + "JOIN student_in_module sm ON sm.modID = m.ID "
+                    + "WHERE sm.studID = " + student.getID();
+        ResultSet rs = st.executeQuery(stringSQL);
+        while(rs.next())
+        {
+            ID = rs.getInt("ID");
+            naam = rs.getString("naam");
+        }
+        
+        return new Opleiding(ID, naam);
     }
 }

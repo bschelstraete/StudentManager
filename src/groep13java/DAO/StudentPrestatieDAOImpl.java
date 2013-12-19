@@ -4,16 +4,14 @@
  */
 package groep13java.DAO;
 
+import groep13java.Model.Indicator;
 import groep13java.Model.Student;
 import groep13java.Model.StudentPrestatie;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public class StudentPrestatieDAOImpl implements StudentPrestatieDAO{
     private DAO dbConnect = DAO.getInstance();
     private Connection conn = dbConnect.getConnection();
@@ -27,6 +25,21 @@ public class StudentPrestatieDAOImpl implements StudentPrestatieDAO{
         stringSQL = "INSERT INTO studentprestatie(studID, indID, score) VALUES(" + studentID + ", " + indicatorID + ", " + indicatorScore + ")";
         prepSt = conn.prepareStatement(stringSQL);
         prepSt.executeUpdate();
+    }
+    
+    @Override
+    public Integer getScoreByIndicatorAndStudent(Indicator indicator, Student student) throws SQLException
+    {
+        Integer score = 0;
+        st = conn.createStatement();
+        stringSQL = "SELECT * FROM studentprestatie WHERE indID = " + indicator.getID() + " AND studID = " + student.getID();
+        ResultSet rs = st.executeQuery(stringSQL);
+        while(rs.next())
+        {
+            score = rs.getInt("score");
+        }
+        
+        return score;
     }
     
     @Override

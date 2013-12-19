@@ -9,10 +9,7 @@ import groep13java.Model.Indicator;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- *
- * @author Jellyfish
- */
+
 public interface IndicatorDAO{
     public List<Indicator> getIndicatoren() throws SQLException;
     public List<Indicator> getIndicatorsByDeelcompetentieID(Integer deelcompID) throws SQLException;
