@@ -100,7 +100,7 @@ public class StudentListPanel extends JPanel{
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
                     int column = 1;
-                    String naam = (String)GetData(target, row, column);
+                    String naam = (String)getData(target, row, column);
                     getPrestatiesByStudent(naam);
                 }
             }
@@ -109,7 +109,7 @@ public class StudentListPanel extends JPanel{
         return table;
     }
     
-    public Object GetData(JTable table, int row_index, int col_index)
+    public Object getData(JTable table, int row_index, int col_index)
     {
         return table.getModel().getValueAt(row_index, col_index);
     } 
@@ -207,9 +207,12 @@ public class StudentListPanel extends JPanel{
         try
         {
             String naam = (String)JOptionPane.showInputDialog(this, "Voor welke student wilt u een score toevoegen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getStudentenString(), null);
-            Student student = user.getStudentByNaam(naam);
-            studentOpvolgPanel = new StudentOpvolgPanel(student, user);
-            JOptionPane.showMessageDialog(this, studentOpvolgPanel, "Opvolging van " + student.getVoornaam() + " " + student.getFamilienaam(), JOptionPane.INFORMATION_MESSAGE);
+            if(naam != null)
+            {
+                Student student = user.getStudentByNaam(naam);
+                studentOpvolgPanel = new StudentOpvolgPanel(student, user);
+                JOptionPane.showMessageDialog(this, studentOpvolgPanel, "Opvolging van " + student.getVoornaam() + " " + student.getFamilienaam(), JOptionPane.PLAIN_MESSAGE);
+            }
         }
         catch(SQLException e)
         {
@@ -223,7 +226,7 @@ public class StudentListPanel extends JPanel{
         {
             Student student = user.getStudentByNaam(naam);
             studentOpvolgPanel = new StudentOpvolgPanel(student, user);
-            JOptionPane.showMessageDialog(this, studentOpvolgPanel, "Opvolging van " + student.getVoornaam() + " " + student.getFamilienaam(), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, studentOpvolgPanel, "Opvolging van " + student.getVoornaam() + " " + student.getFamilienaam(), JOptionPane.PLAIN_MESSAGE);
         }
         catch(SQLException e)
         {

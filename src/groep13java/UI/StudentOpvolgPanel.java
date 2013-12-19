@@ -16,6 +16,8 @@ import groep13java.main.User;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JButton;
@@ -112,10 +114,29 @@ public class StudentOpvolgPanel extends JPanel{
     {
         tableModel = new DefaultTableModel(setDataForTable(), columnNames);
         puntenTabel = new JTable(tableModel);
+        puntenTabel.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                if(e.getClickCount() == 2)
+                {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    int column = 0;
+                    String competentie = (String)getData(target, row, column);
+                    getDetailOpvolging(competentie);
+                }
+            }
+        });
         setTableNonEditable(puntenTabel);
         TableColumn column = puntenTabel.getColumnModel().getColumn(1);
         column.setCellRenderer(new CellProgressRenderer());
     }
+    
+    public Object getData(JTable table, int row_index, int col_index)
+    {
+        return table.getModel().getValueAt(row_index, col_index);
+    } 
     
     private Object[][] setDataForTable()
     {
@@ -225,6 +246,20 @@ public class StudentOpvolgPanel extends JPanel{
             indicatorScoreList[i][0] = indicatorList.get(i).getBeschrijving();
             
             indicatorScoreList[i][1] = user.getScoreByIndicatorAndStudent(indicatorList.get(i), student);
+        }  
+    }
+    
+    private void getDetailOpvolging(String competentieBeschrijving)
+    {
+        try
+        {
+            Competentie competentie = user.getCompetentieByBeschrijving(competentieBeschrijving);
+            DetailOpvolgPanel opvolgPanel = new DetailOpvolgPanel(competentie, user, student);
+            JOptionPane.showMessageDialog(this, opvolgPanel, "Opvolging van " + competentie.getBeschrijving() + ":", JOptionPane.PLAIN_MESSAGE);
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }  
     }
 }
