@@ -128,6 +128,7 @@ public class DetailOpvolgPanel extends JPanel
         for(int i = 0; i < size; i++)
         {   
             deelcompetentieScore = 0;
+            deelcompetentieTotaal = 0;
             berekenIndicatorScore(deelcompetentieList.get(i).getID());
             for(int j = 0; j < indicatorScoreList.length; j++)
             {
@@ -135,10 +136,11 @@ public class DetailOpvolgPanel extends JPanel
                 {
                     deelcompetentieScore += 1;
                 }
+                deelcompetentieTotaal += 1;
             }
             
             deelcompetentieScoreList[i][0] = deelcompetentieList.get(i).getBeschrijving();
-            deelcompetentieScoreList[i][1] = (Integer)Math.round((deelcompetentieScore / size)*100);
+            deelcompetentieScoreList[i][1] = (Integer)Math.round((deelcompetentieScore / deelcompetentieTotaal)*100);
         }
     }
     
@@ -153,14 +155,5 @@ public class DetailOpvolgPanel extends JPanel
             indicatorScoreList[i][0] = indicatorList.get(i).getBeschrijving();   
             indicatorScoreList[i][1] = user.getScoreByIndicatorAndStudent(indicatorList.get(i), student);
         }  
-    }
-    
-    
-    private void stringdis()
-    {
-        for(int i = 0; i < indicatorScoreList.length; i++)
-        {
-            System.out.println(indicatorScoreList[i][0]);
-        }
     }
 }

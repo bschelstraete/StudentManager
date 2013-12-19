@@ -195,7 +195,11 @@ public class PartimMetIndicatorenPanel extends JPanel{
                 String indicatorKeuze = (String)JOptionPane.showInputDialog(this, "Welke indicator wilt u koppelen aan " + partimKeuze, "Keuze", JOptionPane.PLAIN_MESSAGE, null, getGekoppeldeIndicatorStringList(user.getPartimByBeschrijving(partimKeuze).getID()), null);
                 if(indicatorKeuze != null )
                 {
-                    user.ontkoppelIndicatorMetPartimByIndicatorID(user.getIndicatorByBeschrijving(indicatorKeuze).getID());
+                    int confirm = JOptionPane.showConfirmDialog(this, "De incidator zal met de partim ontkoppelt worden.\nWilt u hiermee doorgaan?");
+                    if(confirm == JOptionPane.OK_OPTION)
+                    {
+                        user.ontkoppelIndicatorMetPartimByIndicatorID(user.getIndicatorByBeschrijving(indicatorKeuze).getID());
+                    }
                 }
             }
             initTree();

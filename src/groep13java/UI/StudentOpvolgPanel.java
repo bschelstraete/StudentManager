@@ -16,6 +16,8 @@ import groep13java.main.User;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -71,6 +73,13 @@ public class StudentOpvolgPanel extends JPanel{
     private void initComponents()
     {
         detailButton = new JButton("Details");
+        detailButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                getDetailOpvolging();
+            }
+        });
+        
         setLabels(student);
         initLists();
         initTable();
@@ -221,6 +230,7 @@ public class StudentOpvolgPanel extends JPanel{
         for(int i = 0; i < size; i++)
         {   
             deelcompetentieScore = 0;
+            deelcompetentieTotaal=0;
             berekenIndicatorScore(deelcompetentieList.get(i).getID());
             for(int j = 0; j < indicatorScoreList.length; j++)
             {
@@ -228,10 +238,11 @@ public class StudentOpvolgPanel extends JPanel{
                 {
                     deelcompetentieScore += 1;
                 }
+                deelcompetentieTotaal += 1;
             }
             
             deelcompetentieScoreList[i][0] = deelcompetentieList.get(i).getBeschrijving();
-            deelcompetentieScoreList[i][1] = (Integer)Math.round((deelcompetentieScore / size)*100);
+            deelcompetentieScoreList[i][1] = (Integer)Math.round((deelcompetentieScore / deelcompetentieTotaal)*100);
         }
     }
     
@@ -255,11 +266,36 @@ public class StudentOpvolgPanel extends JPanel{
         {
             Competentie competentie = user.getCompetentieByBeschrijving(competentieBeschrijving);
             DetailOpvolgPanel opvolgPanel = new DetailOpvolgPanel(competentie, user, student);
-            JOptionPane.showMessageDialog(this, opvolgPanel, "Opvolging van " + competentie.getBeschrijving() + ":", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(this, opvolgPanel, "Details van " + competentie.getBeschrijving() + ":", JOptionPane.PLAIN_MESSAGE);
         }
         catch(SQLException e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }  
+    }
+    private void getDetailOpvolging()
+    {
+        try
+        {
+            String competentieBeschrijving = (String)JOptionPane.showInputDialog(this, "Voor welke student wilt u een score toevoegen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getCompetentieString(), null);
+            Competentie competentie = user.getCompetentieByBeschrijving(competentieBeschrijving);
+            DetailOpvolgPanel opvolgPanel = new DetailOpvolgPanel(competentie, user, student);
+            JOptionPane.showMessageDialog(this, opvolgPanel, "Details van " + competentie.getBeschrijving() + ":", JOptionPane.PLAIN_MESSAGE);
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }  
+    }
+    
+    private String[] getCompetentieString()
+    {
+        String[] competentieStringList = new String[competentieList.size()];
+        for(int i = 0; i < competentieList.size(); i++)
+        {
+            competentieStringList[i] = competentieList.get(i).getBeschrijving();
+        }
+        
+        return competentieStringList;
     }
 }

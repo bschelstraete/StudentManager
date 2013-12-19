@@ -58,7 +58,7 @@ public class StudentListPanel extends JPanel{
             }
         });
         
-        invoerenIndicator = new JButton("Indicators invoeren");
+        invoerenIndicator = new JButton("Score invoeren");
         invoerenIndicator.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -206,7 +206,7 @@ public class StudentListPanel extends JPanel{
     {
         try
         {
-            String naam = (String)JOptionPane.showInputDialog(this, "Voor welke student wilt u een score toevoegen?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getStudentenString(), null);
+            String naam = (String)JOptionPane.showInputDialog(this, "Van welke student wilt u de opvolging bekijken?", "Keuze", JOptionPane.PLAIN_MESSAGE, null, getStudentenString(), null);
             if(naam != null)
             {
                 Student student = user.getStudentByNaam(naam);

@@ -107,6 +107,10 @@ public class IndicatorDAOImpl implements IndicatorDAO{
 
     @Override
     public void verwijderIndicator(Indicator indicator) throws SQLException {
+        prepSt = conn.prepareStatement("DELETE FROM studentprestatie WHERE indID = " + indicator.getID());
+        prepSt.executeUpdate();
+        prepSt = conn.prepareStatement("DELETE FROM indicatorpartim WHERE indID = " + indicator.getID());
+        prepSt.executeUpdate();
         prepSt = conn.prepareStatement("DELETE FROM indicator WHERE ID = " + indicator.getID());
         prepSt.executeUpdate();
     }
